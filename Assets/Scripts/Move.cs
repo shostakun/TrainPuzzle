@@ -40,11 +40,13 @@ public class Move : MonoBehaviour
         TrackPath p = tile.GetPathFrom(dir);
         if (p == null) return;
         if (currentTile != null) currentTile.isInUse = false;
+        currentTile.onTrainExit?.Invoke();
         currentTile = tile;
         tile.isInUse = true;
         path = p;
         direction = path.end;
         SetGoal(path.GetNext());
+        tile.onTrainEnter?.Invoke();
     }
 
     public void SetStartTile(Tile tile)
