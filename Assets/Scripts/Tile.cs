@@ -15,6 +15,8 @@ public class Tile : MonoBehaviour
     public bool isStation = false;
     public bool isLocked => isStation || isInUse;
     public float halfTile = 0.4f;
+    public UnityAction onTrainEnter;
+    public UnityAction onTrainExit;
 
     [SerializeField]
     private bool _isTool = false;
