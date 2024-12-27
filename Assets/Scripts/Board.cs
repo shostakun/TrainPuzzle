@@ -2,22 +2,29 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    public Transform tileContainer;
-    public GameObject tilePrefab;
+    public static Board inst { get; private set; }
+
     public int width = 10;
     public int height = 8;
     public Vector2Int highlight { get; protected set; } = new Vector2Int(-1, -1);
-    private Tile[] tiles;
+    private Track[] tracks;
 
-    void Awake()
+    protected void Awake()
     {
-        tiles = new Tile[width * height];
-        Camera.main.transform.position = new Vector3((width - 1f) / 2f, (height - 1f) / 2f, Camera.main.transform.position.z);
+        if (inst == null)
+        {
+            inst = this;
+            tracks = new Track[width * height];
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public Tile GetNeighbor(Tile tile, string direction)
+    public Track GetNeighbor(Track track, string direction)
     {
-        Vector2Int address = ToAddress(tile.transform.position);
+        Vector2Int address = ToAddress(track.transform.position);
         switch (direction)
         {
             case "N":
@@ -33,7 +40,7 @@ public class Board : MonoBehaviour
                 address.x--;
                 break;
         }
-        return IsInside(address) ? tiles[ToIndex(address)] : null;
+        return IsInside(address) ? tracks[ToIndex(address)] : null;
     }
 
     public static string GetOpposite(string direction)
@@ -65,41 +72,41 @@ public class Board : MonoBehaviour
         return IsInside(ToAddress(position));
     }
 
-    public void RemoveTile(Tile tile)
+    public void RemoveTrack(Track track)
     {
-        for (int i = 0; i < tiles.Length; i++)
+        for (int i = 0; i < tracks.Length; i++)
         {
-            if (tiles[i] == tile)
+            if (tracks[i] == track)
             {
-                tiles[i] = null;
+                tracks[i] = null;
                 break;
             }
         }
     }
 
-    public void SetTile(Tile tile)
+    public void SetTrack(Track track)
     {
-        Vector3 position = SnapToGrid(tile.transform.position);
+        Vector3 position = SnapToGrid(track.transform.position);
         if (IsInside(position))
         {
             int index = ToIndex(position);
-            Tile oldTile = tiles[index];
-            if (oldTile != null)
+            Track oldTrack = tracks[index];
+            if (oldTrack != null)
             {
-                if (oldTile.isLocked)
+                if (oldTrack.isLocked)
                 {
-                    tile.Erase();
+                    track.Erase();
                     return;
                 }
-                tiles[index].Erase();
+                tracks[index].Erase();
             }
-            tiles[index] = tile;
+            tracks[index] = track;
         }
     }
 
     public Vector3 SnapToGrid(Vector3 position)
     {
-        return new Vector3(Mathf.Round(position.x), Mathf.Round(position.y), transform.position.z);
+        return ToPosition(ToAddress(position));
     }
 
     public Vector2Int ToAddress(int index)
@@ -109,7 +116,7 @@ public class Board : MonoBehaviour
 
     public Vector2Int ToAddress(Vector3 position)
     {
-        return new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
+        return new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
     }
 
     public int ToIndex(Vector2Int address)
@@ -124,7 +131,7 @@ public class Board : MonoBehaviour
 
     public Vector3 ToPosition(Vector2Int address)
     {
-        return new Vector3(address.x, address.y, transform.position.z);
+        return new Vector3(address.x, transform.position.y, address.y);
     }
 
     public Vector3 ToPosition(int index)

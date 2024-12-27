@@ -3,18 +3,16 @@ using UnityEngine;
 public class MakeTiles : MonoBehaviour
 {
     public GameObject tilePrefab;
-    private Board board;
 
     void Start()
     {
-        board = GetComponentInParent<Board>();
-        int width = board.width;
-        int height = board.height;
+        int width = Board.inst.width;
+        int height = Board.inst.height;
         for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int z = 0; z < height; z++)
             {
-                GameObject tile = Instantiate(tilePrefab, transform.position + new Vector3(x, y, 0), Quaternion.identity, transform);
+                Instantiate(tilePrefab, transform.position + new Vector3(x, 0, z), Quaternion.identity, transform);
             }
         }
     }

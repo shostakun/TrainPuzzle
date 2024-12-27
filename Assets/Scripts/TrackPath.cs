@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TrackPath : MonoBehaviour
 {
-    public string start = "E";
-    public string end = "W";
+    public string start => path.Count > 1 ? path[0].name : "C";
+    public string end => path.Count > 0 ? path[path.Count - 1].name : "C";
 
     public List<Transform> path;
 
