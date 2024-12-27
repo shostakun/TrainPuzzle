@@ -6,18 +6,16 @@ public class MakeStations : MonoBehaviour
     public GameObject[] stationPrefabs;
     public GameObject trainPrefab;
     public Transform trainContainer;
-    private Board board;
 
     void Start()
     {
-        board = GetComponentInParent<Board>();
         Vector3[] positions = new Vector3[number];
         bool valid = false;
         while (!valid)
         {
             for (int i = 0; i < number; i++)
             {
-                positions[i] = new Vector3(Random.Range(1, board.width - 1), Random.Range(1, board.height - 1), 0);
+                positions[i] = new Vector3(Random.Range(1, Board.inst.width - 1), 0, Random.Range(1, Board.inst.height - 1));
             }
             valid = true;
             for (int i = 0; i < number - 1; i++)
@@ -41,13 +39,13 @@ public class MakeStations : MonoBehaviour
             GameObject stationPrefab = stationPrefabs[Random.Range(0, stationPrefabs.Length)];
             Vector3 position = transform.position + positions[i];
             GameObject station = Instantiate(stationPrefab, position, Quaternion.identity, transform);
-            Tile tile = station.GetComponent<Tile>();
-            board.SetTile(tile);
+            Track track = station.GetComponent<Track>();
+            Board.inst.SetTrack(track);
             if (i == 0)
             {
-                position.z = trainContainer.position.z;
+                position.y = trainContainer.position.y;
                 GameObject train = Instantiate(trainPrefab, position, Quaternion.identity, trainContainer);
-                train.GetComponent<Move>().SetStartTile(tile);
+                train.GetComponent<Move>().SetStartTrack(track);
             }
         }
     }

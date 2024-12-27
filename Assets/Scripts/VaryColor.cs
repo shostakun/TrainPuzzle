@@ -11,12 +11,10 @@ public class VaryColor : MonoBehaviour
     [SerializeField]
     public Color highlightColor = Color.yellow;
     public float crossFade = 0.2f;
-    private Board board;
     private SpriteRenderer renderer_;
 
     void Start()
     {
-        board = FindFirstObjectByType<Board>();
         frequency = Random.Range(minFrequency, maxFrequency);
         phase = Random.Range(0, 2 * Mathf.PI);
         renderer_ = GetComponent<SpriteRenderer>();
@@ -25,7 +23,8 @@ public class VaryColor : MonoBehaviour
 
     void Update()
     {
-        bool isHighlighted = board.highlight.x == Mathf.RoundToInt(transform.position.x) && board.highlight.y == Mathf.RoundToInt(transform.position.y);
+        bool isHighlighted = Board.inst.highlight.x == Mathf.RoundToInt(transform.position.x) &&
+            Board.inst.highlight.y == Mathf.RoundToInt(transform.position.y);
         Color normal = Color.HSVToRGB(H, S, V + amplitude * Mathf.Sin(Time.time * frequency + phase));
         if (isHighlighted)
         {

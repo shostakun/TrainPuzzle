@@ -4,24 +4,23 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public float speed = 1;
-    private Board board;
+    public float turnSpeed = 1;
     protected string direction;
     protected TrackPath path;
     protected Transform node;
     protected Vector3 goal;
-    protected Tile currentTile;
+    protected Track currentTrack;
 
     void Start()
     {
-        board = FindFirstObjectByType<Board>();
         SetGoal(transform);
     }
 
     protected Quaternion GetGoalRotation()
     {
         Vector3 direction = goal - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        return Quaternion.AngleAxis(angle, Vector3.forward);
+        float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle, Vector3.up);
     }
 
     public void SetGoal(Transform transform_)
@@ -29,31 +28,31 @@ public class Move : MonoBehaviour
         if (transform_ == null) return;
         node = transform_;
         goal = node.position;
-        goal.z = transform.position.z;
+        goal.y = transform.position.y;
         Debug.Log($"SetGoal: {goal} {direction}");
     }
 
-    public void SetCurrentTile(Tile tile)
+    public void SetCurrentTrack(Track track)
     {
-        if (tile == null) return;
+        if (track == null) return;
         string dir = Board.GetOpposite(direction);
-        TrackPath p = tile.GetPathFrom(dir);
+        TrackPath p = track.GetPathFrom(dir);
         if (p == null) return;
-        if (currentTile != null) currentTile.isInUse = false;
-        currentTile.onTrainExit?.Invoke();
-        currentTile = tile;
-        tile.isInUse = true;
+        if (currentTrack != null) currentTrack.isInUse = false;
+        currentTrack.onTrainExit?.Invoke();
+        currentTrack = track;
+        track.isInUse = true;
         path = p;
         direction = path.end;
         SetGoal(path.GetNext());
-        tile.onTrainEnter?.Invoke();
+        track.onTrainEnter?.Invoke();
     }
 
-    public void SetStartTile(Tile tile)
+    public void SetStartTrack(Track track)
     {
-        currentTile = tile;
-        tile.isInUse = true;
-        path = tile.GetPathFrom("C");
+        currentTrack = track;
+        track.isInUse = true;
+        path = track.GetPathFrom("C");
         direction = path.end;
         SetGoal(path.GetNext());
         transform.rotation = GetGoalRotation();
@@ -75,12 +74,12 @@ public class Move : MonoBehaviour
             else
             {
                 Debug.Log($"Update with end direction: {direction}");
-                SetCurrentTile(board.GetNeighbor(currentTile, direction));
+                SetCurrentTrack(Board.inst.GetNeighbor(currentTrack, direction));
             }
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, GetGoalRotation(), 180 * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, GetGoalRotation(), 180 * turnSpeed * Time.deltaTime);
         }
     }
 }

@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "TrainPuzzle.sln",
+    "dotnet.defaultSolution": "TrainGame.sln",
     "cSpell.words": [
         "Mathf"
     ]
