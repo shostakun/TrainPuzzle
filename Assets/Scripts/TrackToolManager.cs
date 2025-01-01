@@ -46,63 +46,29 @@ public class TrackToolManager : MonoBehaviour
             currentTool = "";
         }
         if (currentTool == "") return;
-        GetActiveTile();
-        PlaceObject();
     }
 
-    void GetActiveTile()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var hits = Physics.RaycastAll(ray);
-        GameObject oldActiveTile = activeTile;
-        if (hits.Length == 0)
-        {
-            activeTile = null;
-        }
-        else
-        {
-            RaycastHit hit = new RaycastHit();
-            float minDistance = float.MaxValue;
-            foreach (var h in hits)
-            {
-                if (h.distance < minDistance)
-                {
-                    minDistance = h.distance;
-                    hit = h;
-                }
-            }
-            activeTile = hit.collider.gameObject;
-        }
-
-        if (activeTile != oldActiveTile && onActiveTileChange != null) onActiveTileChange(activeTile);
-
-        if (currentObj == null) return;
-        if (activeTile == null)
-        {
-            currentObj.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("Active tile: " + activeTile.transform.position);
-            currentObj.SetActive(true);
-            currentObj.transform.position = activeTile.transform.position;
-        }
-    }
-
-    void PlaceObject()
+    public void PlaceObject()
     {
         if (activeTile == null || currentObj == null) return;
-        if (Input.GetMouseButtonDown(0))
+        Track track = Board.inst.GetTrack(currentObj.transform.position);
+        if (track == null)
         {
-            Track track = Board.inst.GetTrack(currentObj.transform.position);
-            if (track == null)
-            {
-                Debug.LogError("No track at " + currentObj.transform.position);
-                return;
-            }
-            // TODO: Check board rules.
-            Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
+            Debug.LogError("No track at " + currentObj.transform.position);
+            return;
         }
+        // TODO: Check board rules.
+        Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
+    }
+
+    public void SetActiveTile(GameObject tile)
+    {
+        activeTile = tile;
+        onActiveTileChange?.Invoke(tile);
+        if (currentObj == null) return;
+        currentObj.SetActive(tile != null);
+        if (tile == null) return;
+        currentObj.transform.position = tile.transform.position;
     }
 
     public void SetTool(ActivateTool tool)
