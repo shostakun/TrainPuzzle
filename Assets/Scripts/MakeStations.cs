@@ -45,7 +45,8 @@ public class MakeStations : MonoBehaviour
                 continue;
             }
             track.isStation = true;
-            Instantiate(stationPrefab, position, Quaternion.identity, track.transform);
+            GameObject station = Instantiate(stationPrefab, position, Quaternion.identity, track.transform);
+            station.name = stationPrefab.name;
             if (i == 0)
             {
                 position.y = trainContainer.position.y;

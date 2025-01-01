@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,31 +8,28 @@ public class Track : MonoBehaviour
 {
     public bool isInUse = false;
     public bool isStation = false;
-    public bool isLocked => isStation || isInUse;
-    public UnityAction onTrainEnter;
-    public UnityAction onTrainExit;
-
-    [SerializeField]
-    private bool _isTool = false;
-    public bool isTool
+    public bool isLocked
     {
-        get { return _isTool; }
-        set
+        get
         {
-            _isTool = value;
-            transform.localScale = new Vector3(baseScale, baseScale, baseScale);
-            if (_isTool) transform.localScale *= toolScaleFactor;
+            if (isInUse || isStation) return true;
+            if (TrackToolManager.inst.currentObj != null)
+            {
+                List<string> toolPaths = GetPathList(TrackToolManager.inst.currentObj);
+                string toolPathString = string.Join("", toolPaths);
+                Vector2Int addr = Board.inst.ToAddress(transform.position);
+                if (toolPathString.Contains("N") && addr.y == Board.inst.height - 1) return true;
+                if (toolPathString.Contains("S") && addr.y == 0) return true;
+                if (toolPathString.Contains("E") && addr.x == Board.inst.width - 1) return true;
+                if (toolPathString.Contains("W") && addr.x == 0) return true;
+                List<string> existingPaths = GetPathList(gameObject);
+                if (existingPaths.Intersect(toolPaths).Count() > 0) return true;
+            }
+            return false;
         }
     }
-
-    protected float baseScale;
-    public float toolScaleFactor = 1.25f;
-    public float dragScaleFactor = 1.5f;
-
-    void Awake()
-    {
-        baseScale = transform.localScale.x;
-    }
+    public UnityAction onTrainEnter;
+    public UnityAction onTrainExit;
 
     public void Erase()
     {
@@ -43,6 +41,11 @@ public class Track : MonoBehaviour
         var paths = GetComponentsInChildren<TrackPath>().Where(p => p.start == start).ToList();
         if (paths.Count == 0) return null;
         return paths[Random.Range(0, paths.Count)];
+    }
+
+    static List<string> GetPathList(GameObject obj)
+    {
+        return obj.GetComponentsInChildren<TrackPath>().Select(p => p.start + p.end).ToList();
     }
 
     public IEnumerator Shrink(Vector3 targetScale, Vector3 targetPosition, UnityAction callback = null)

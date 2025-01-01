@@ -5,8 +5,8 @@ public class TrackToolManager : MonoBehaviour
 {
     public static TrackToolManager inst { get; private set; }
 
-    protected GameObject activeTile;
-    protected GameObject currentObj;
+    public GameObject activeTile { get; protected set; }
+    public GameObject currentObj { get; protected set; }
     private string _currentTool = "";
     public string currentTool
     {
@@ -58,8 +58,8 @@ public class TrackToolManager : MonoBehaviour
             Debug.LogError("No track at " + currentObj.transform.position);
             return;
         }
-        // TODO: Check board rules.
-        Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
+        if (!track.isLocked)
+            Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
     }
 
     public void SetActiveTile(GameObject tile)
@@ -67,7 +67,13 @@ public class TrackToolManager : MonoBehaviour
         activeTile = tile;
         onActiveTileChange?.Invoke(tile);
         if (currentObj == null) return;
-        currentObj.SetActive(tile != null);
+        if (tile == null)
+        {
+            currentObj.SetActive(false);
+            return;
+        }
+        Track track = Board.inst.GetTrack(tile.transform.position);
+        currentObj.SetActive(track != null && !track.isLocked);
         if (tile == null) return;
         currentObj.transform.position = tile.transform.position;
     }
@@ -80,6 +86,7 @@ public class TrackToolManager : MonoBehaviour
         }
         currentObj = Instantiate(tool.trackPrefab, trackContainer);
         currentObj.name = tool.trackPrefab.name;
+        currentObj.SetActive(false);
         currentTool = tool.name;
     }
 }
