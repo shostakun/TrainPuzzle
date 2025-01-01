@@ -1,20 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Track))]
 public class TileHighlight : MonoBehaviour
 {
-    public GameObject highlight;
+    public float animationDuration = 0.2f;
+    protected Material baseMaterial;
+    public Material highlightMaterial;
+    public Material lockedMaterial;
+    public new Renderer renderer;
     protected Track track;
 
     void Start()
     {
-        TrackToolManager.inst.onActiveTileChange += OnActiveTileChanged;
+        baseMaterial = renderer.material;
+        TrackToolManager.inst.onActiveTileChange += SetHighlight;
+        TrackToolManager.inst.onToolChange += SetHighlight;
         track = GetComponent<Track>();
-    }
-
-    void OnActiveTileChanged(GameObject tile)
-    {
-        highlight.SetActive(tile == gameObject && !track.isLocked);
     }
 
     void OnMouseEnter()
@@ -30,5 +32,31 @@ public class TileHighlight : MonoBehaviour
     void OnMouseUpAsButton()
     {
         TrackToolManager.inst.PlaceObject();
+    }
+
+    void SetHighlight()
+    {
+        if (TrackToolManager.inst.currentTool != "" && track.isLocked)
+        {
+            renderer.material = lockedMaterial;
+        }
+        else if (TrackToolManager.inst.currentTool != "" && TrackToolManager.inst.activeTile == gameObject)
+        {
+            renderer.material = highlightMaterial;
+        }
+        else
+        {
+            renderer.material = baseMaterial;
+        }
+    }
+
+    void SetHighlight(GameObject tile)
+    {
+        SetHighlight();
+    }
+
+    void SetHighlight(string tool)
+    {
+        SetHighlight();
     }
 }
