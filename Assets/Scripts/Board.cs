@@ -43,6 +43,11 @@ public class Board : MonoBehaviour
         return IsInside(address) ? tracks[ToIndex(address)] : null;
     }
 
+    public Track GetTrack(Vector3 position)
+    {
+        return IsInside(position) ? tracks[ToIndex(position)] : null;
+    }
+
     public static string GetOpposite(string direction)
     {
         switch (direction)

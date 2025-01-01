@@ -38,9 +38,14 @@ public class MakeStations : MonoBehaviour
         {
             GameObject stationPrefab = stationPrefabs[Random.Range(0, stationPrefabs.Length)];
             Vector3 position = transform.position + positions[i];
-            GameObject station = Instantiate(stationPrefab, position, Quaternion.identity, transform);
-            Track track = station.GetComponent<Track>();
-            Board.inst.SetTrack(track);
+            Track track = Board.inst.GetTrack(position);
+            if (track == null)
+            {
+                Debug.LogError("No track at " + position);
+                continue;
+            }
+            track.isStation = true;
+            Instantiate(stationPrefab, position, Quaternion.identity, track.transform);
             if (i == 0)
             {
                 position.y = trainContainer.position.y;

@@ -83,6 +83,7 @@ public class TrackToolManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("Active tile: " + activeTile.transform.position);
             currentObj.SetActive(true);
             currentObj.transform.position = activeTile.transform.position;
         }
@@ -93,10 +94,14 @@ public class TrackToolManager : MonoBehaviour
         if (activeTile == null || currentObj == null) return;
         if (Input.GetMouseButtonDown(0))
         {
+            Track track = Board.inst.GetTrack(currentObj.transform.position);
+            if (track == null)
+            {
+                Debug.LogError("No track at " + currentObj.transform.position);
+                return;
+            }
             // TODO: Check board rules.
-            GameObject newObj = Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, trackContainer);
-            Track track = newObj.GetComponent<Track>();
-            if (track != null) Board.inst.SetTrack(track);
+            Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
         }
     }
 
