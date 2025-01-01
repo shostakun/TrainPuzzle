@@ -33,44 +33,6 @@ public class Track : MonoBehaviour
         baseScale = transform.localScale.x;
     }
 
-    void OnMouseDown()
-    {
-        if (isTool)
-        {
-            GameObject go = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
-            Track track = go.GetComponent<Track>();
-            track.baseScale = baseScale;
-        }
-        else
-        {
-            Board.inst.RemoveTrack(this);
-        }
-        isTool = false;
-    }
-
-    void OnMouseDrag()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
-        // Debug.Log(mousePosition);
-        transform.position = mousePosition;
-        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * baseScale * dragScaleFactor, 0.1f);
-        Board.inst.Highlight(transform.position);
-    }
-
-    void OnMouseUp()
-    {
-        isTool = false;
-        if (!Board.inst.IsInside(transform.position))
-        {
-            Erase();
-            return;
-        }
-        StartCoroutine(Shrink(Vector3.one * baseScale, Board.inst.SnapToGrid(transform.position)));
-        Board.inst.Highlight(Vector3.one * -1);
-        Board.inst.SetTrack(this);
-    }
-
     public void Erase()
     {
         StartCoroutine(Shrink(Vector3.zero, transform.position, () => Destroy(gameObject)));
@@ -78,7 +40,7 @@ public class Track : MonoBehaviour
 
     public TrackPath GetPathFrom(string start)
     {
-        var paths = GetComponents<TrackPath>().Where(p => p.start == start).ToList();
+        var paths = GetComponentsInChildren<TrackPath>().Where(p => p.start == start).ToList();
         if (paths.Count == 0) return null;
         return paths[Random.Range(0, paths.Count)];
     }
