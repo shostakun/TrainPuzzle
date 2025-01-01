@@ -18,7 +18,6 @@ public class MenuManager : MonoBehaviour
         {
             bool changed = _activeMenu != value;
             _activeMenu = value;
-            Debug.Log("Active menu: " + value);
             ShowActiveMenu();
             if (changed) onMenuChange?.Invoke(value);
         }
@@ -48,9 +47,16 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && TrackToolManager.inst.currentTool == "" && activeMenu != "")
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
-            activeMenu = "";
+            if (TrackToolManager.inst.currentTool != "")
+            {
+                TrackToolManager.inst.ClearTool();
+            }
+            else if (activeMenu != "")
+            {
+                activeMenu = "";
+            }
         }
     }
 

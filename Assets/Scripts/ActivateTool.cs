@@ -49,7 +49,6 @@ public class ActivateTool : MonoBehaviour
 
     void OnMenuChange(string menuName)
     {
-        Debug.Log($"Menu change: {gameObject.name} {menuName} {menu == null}");
         if (menu == null) return;
         if (menu.name == menuName)
         {
@@ -64,7 +63,6 @@ public class ActivateTool : MonoBehaviour
 
     void OnToolChange(string tool)
     {
-        Debug.Log($"Tool change: {gameObject.name} {tool} {menu == null}");
         if (menu != null) return;
         if (tool == gameObject.name)
         {

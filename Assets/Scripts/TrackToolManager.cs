@@ -18,7 +18,6 @@ public class TrackToolManager : MonoBehaviour
         {
             bool changed = _currentTool != value;
             _currentTool = value;
-            Debug.Log("Current tool: " + value);
             if (changed) onToolChange?.Invoke(value);
         }
     }
@@ -39,13 +38,15 @@ public class TrackToolManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void ClearTool()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
+        activeTile = null;
+        onActiveTileChange?.Invoke(null);
+        if (currentObj != null)
         {
-            currentTool = "";
+            Destroy(currentObj);
         }
-        if (currentTool == "") return;
+        currentTool = "";
     }
 
     public void PlaceObject()
