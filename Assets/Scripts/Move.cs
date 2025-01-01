@@ -64,16 +64,13 @@ public class Move : MonoBehaviour
         if (Vector3.Distance(transform.position, goal) < 0.01f)
         {
             Transform next = path.GetNext(node);
-            Debug.Log($"Update: {next}");
             if (next != null)
             {
-                Debug.Log($"Update with Transform: {next.position}");
                 node = next;
                 SetGoal(next);
             }
             else
             {
-                Debug.Log($"Update with end direction: {direction}");
                 SetCurrentTrack(Board.inst.GetNeighbor(currentTrack, direction));
             }
         }
