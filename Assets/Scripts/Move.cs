@@ -29,7 +29,6 @@ public class Move : MonoBehaviour
         node = transform_;
         goal = node.position;
         goal.y = transform.position.y;
-        Debug.Log($"SetGoal: {goal} {direction}");
     }
 
     public void SetCurrentTrack(Track track)
