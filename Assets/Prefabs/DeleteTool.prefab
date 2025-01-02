@@ -376,7 +376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 5481607965627177903}
-  highlightImage: {fileID: 5481607965627177903}
+  closeSubMenus: 1
+  highlightImage: {fileID: 4086201045363843779}
   iconImageObject: {fileID: 1689376095653585596}
   menu: {fileID: 0}
   prefab: {fileID: 5734011623773084415, guid: 91623c1184a9a4f4b932195784fb273d, type: 3}
