@@ -49,9 +49,9 @@ public class MenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
         {
-            if (TrackToolManager.inst.currentTool != "")
+            if (ToolManager.inst.currentTool != "")
             {
-                TrackToolManager.inst.ClearTool();
+                ToolManager.inst.ClearTool();
             }
             else if (activeMenu != "")
             {

@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TrackToolManager : MonoBehaviour
+public delegate bool ToolLockRule(Vector3 position);
+
+public class ToolManager : MonoBehaviour
 {
-    public static TrackToolManager inst { get; private set; }
+    public static ToolManager inst { get; private set; }
 
     public GameObject activeTile { get; protected set; }
     public GameObject currentObj { get; protected set; }
@@ -84,8 +86,8 @@ public class TrackToolManager : MonoBehaviour
         {
             Destroy(currentObj);
         }
-        currentObj = Instantiate(tool.trackPrefab, trackContainer);
-        currentObj.name = tool.trackPrefab.name;
+        currentObj = Instantiate(tool.prefab, trackContainer);
+        currentObj.name = tool.prefab.name;
         currentObj.SetActive(false);
         currentTool = tool.name;
     }

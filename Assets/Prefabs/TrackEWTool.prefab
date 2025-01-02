@@ -105,6 +105,10 @@ PrefabInstance:
       value: TrackEWTool
       objectReference: {fileID: 0}
     - target: {fileID: 8131037338073606037, guid: cb6a42ed251244a33821a920caef8201, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 1945246578996732855, guid: 82700040ef91e43c0bdedbcebbcef6b9, type: 3}
+    - target: {fileID: 8131037338073606037, guid: cb6a42ed251244a33821a920caef8201, type: 3}
       propertyPath: trackPrefab
       value: 
       objectReference: {fileID: 1945246578996732855, guid: 82700040ef91e43c0bdedbcebbcef6b9, type: 3}

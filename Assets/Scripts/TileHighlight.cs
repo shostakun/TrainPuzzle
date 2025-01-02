@@ -14,33 +14,33 @@ public class TileHighlight : MonoBehaviour
     void Start()
     {
         baseMaterial = renderer.material;
-        TrackToolManager.inst.onActiveTileChange += SetHighlight;
-        TrackToolManager.inst.onToolChange += SetHighlight;
+        ToolManager.inst.onActiveTileChange += SetHighlight;
+        ToolManager.inst.onToolChange += SetHighlight;
         track = GetComponent<Track>();
     }
 
     void OnMouseEnter()
     {
-        TrackToolManager.inst.SetActiveTile(gameObject);
+        ToolManager.inst.SetActiveTile(gameObject);
     }
 
     void OnMouseExit()
     {
-        TrackToolManager.inst.SetActiveTile(null);
+        ToolManager.inst.SetActiveTile(null);
     }
 
     void OnMouseUpAsButton()
     {
-        TrackToolManager.inst.PlaceObject();
+        ToolManager.inst.PlaceObject();
     }
 
     void SetHighlight()
     {
-        if (TrackToolManager.inst.currentTool != "" && track.isLocked)
+        if (ToolManager.inst.currentTool != "" && track.isLocked)
         {
             renderer.material = lockedMaterial;
         }
-        else if (TrackToolManager.inst.currentTool != "" && TrackToolManager.inst.activeTile == gameObject)
+        else if (ToolManager.inst.currentTool != "" && ToolManager.inst.activeTile == gameObject)
         {
             renderer.material = highlightMaterial;
         }
