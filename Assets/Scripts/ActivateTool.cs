@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class ActivateTool : MonoBehaviour
 {
     public Image backgroundImage;
+    public bool closeSubMenus = false;
+    protected bool hasSubMenu => menu != null;
     public Image highlightImage;
     public GameObject iconImageObject;
     public GameObject menu;
@@ -20,7 +22,7 @@ public class ActivateTool : MonoBehaviour
     void OnEnable()
     {
         settings = GetComponentInParent<MenuSettings>();
-        backgroundImage.color = settings.backgroundColor;
+        backgroundImage.color = (hasSubMenu || closeSubMenus) ? settings.backgroundColor : settings.subMenuColor;
         highlightImage.color = settings.inactiveColor;
         // OnMenuChange(MenuManager.inst.activeMenu);
         // OnToolChange(ToolManager.inst.currentTool);
@@ -28,9 +30,10 @@ public class ActivateTool : MonoBehaviour
 
     public void Activate()
     {
-        if (menu == null)
+        if (!hasSubMenu)
         {
             ToolManager.inst.SetTool(this);
+            if (closeSubMenus) MenuManager.inst.activeMenu = "";
         }
         else
         {
@@ -38,48 +41,49 @@ public class ActivateTool : MonoBehaviour
         }
     }
 
-    IEnumerator FadeTo(Color targetColor)
+    IEnumerator FadeTo(Image image, Color targetColor)
     {
+        Color startColor = image.color;
         for (float t = 0; t < 1; t += Time.deltaTime / settings.animationDuration)
         {
-            highlightImage.color = Color.Lerp(settings.inactiveColor, targetColor, t);
+            image.color = Color.Lerp(startColor, targetColor, t);
             yield return null;
         }
-        highlightImage.color = targetColor;
+        image.color = targetColor;
     }
 
     void OnMenuChange(string menuName)
     {
-        if (menu == null) return;
+        if (!hasSubMenu) return;
         if (menu.name == menuName)
         {
             ToolManager.inst.SetTool(this);
-            SetColor(settings.activeColor);
+            SetColor(backgroundImage, settings.subMenuColor);
         }
         else
         {
-            SetColor(settings.inactiveColor);
+            SetColor(backgroundImage, settings.backgroundColor);
         }
     }
 
     void OnToolChange(string tool)
     {
-        if (menu != null) return;
+        if (hasSubMenu) return;
         if (tool == gameObject.name)
         {
-            SetColor(settings.activeColor);
+            SetColor(highlightImage, settings.activeColor);
         }
         else
         {
-            SetColor(settings.inactiveColor);
+            SetColor(highlightImage, settings.inactiveColor);
         }
     }
 
-    void SetColor(Color color)
+    void SetColor(Image image, Color color)
     {
         if (gameObject.activeInHierarchy)
         {
-            StartCoroutine(FadeTo(color));
+            StartCoroutine(FadeTo(image, color));
         }
         else
         {
