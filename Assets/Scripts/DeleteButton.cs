@@ -8,8 +8,8 @@ public class DeleteButton : MonoBehaviour
     public void DeleteTarget()
     {
         if (target != null) Destroy(target);
-        DestroyImmediate(gameObject);
-        if (DeleteMenuManager.inst.itemCount < 1) DeleteMenuManager.inst.Hide();
+        if (DeleteMenuManager.inst.itemCount <= 1) DeleteMenuManager.inst.Hide();
+        Destroy(gameObject);
     }
 
     public void SetIcon(GameObject iconPrefab)
