@@ -130,7 +130,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: StationEW
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8425684689894322890, guid: 82700040ef91e43c0bdedbcebbcef6b9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 261356870754102037, guid: 82700040ef91e43c0bdedbcebbcef6b9, type: 3}

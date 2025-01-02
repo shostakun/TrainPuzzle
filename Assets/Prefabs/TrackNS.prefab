@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1413219529984435093}
   - component: {fileID: 7801169816605321842}
   - component: {fileID: 5960052956049067037}
+  - component: {fileID: 5325243134921534646}
   m_Layer: 0
   m_Name: TrackNS
   m_TagString: Untagged
@@ -98,6 +99,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path:
   - {fileID: 4720780638716247856}
+--- !u!114 &5325243134921534646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2880048157044522443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616a32d2f47994c05822a57ef64e022d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deleteButtonPrefab: {fileID: 6223587998077356317, guid: a436584f449f54e65a12ea69c3cf6003, type: 3}
+  iconPrefab: {fileID: 0}
 --- !u!1 &5884738648402438639
 GameObject:
   m_ObjectHideFlags: 0
