@@ -69,6 +69,16 @@ public class Board : MonoBehaviour
             new Vector2Int(-1, -1);
     }
 
+    public bool IsEdge(Vector2Int address)
+    {
+        return address.x == 0 || address.x == width - 1 || address.y == 0 || address.y == height - 1;
+    }
+
+    public bool IsEdge(Vector3 position)
+    {
+        return IsEdge(ToAddress(position));
+    }
+
     public bool IsInside(Vector2Int address)
     {
         return address.x >= 0 && address.x < width && address.y >= 0 && address.y < height;

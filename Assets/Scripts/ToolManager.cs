@@ -6,6 +6,11 @@ public interface ToolLockRule
     public bool IsLocked(Track track);
 }
 
+public interface ToolRefresher
+{
+    public void Refresh();
+}
+
 public class ToolManager : MonoBehaviour
 {
     public static ToolManager inst { get; private set; }
@@ -75,6 +80,10 @@ public class ToolManager : MonoBehaviour
         }
         if (!track.isLocked)
             Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
+        foreach (ToolRefresher refresher in currentObj.GetComponentsInChildren<ToolRefresher>())
+        {
+            refresher.Refresh();
+        }
     }
 
     public void SetActiveTile(GameObject tile)
