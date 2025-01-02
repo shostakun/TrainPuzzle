@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9038750833065181269}
     m_Modifications:
+    - target: {fileID: -7137547744926865029, guid: ff6d48fab60d741c4a42b178bc95c1b9, type: 3}
+      propertyPath: E
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7137547744926865029, guid: ff6d48fab60d741c4a42b178bc95c1b9, type: 3}
+      propertyPath: N
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7137547744926865029, guid: ff6d48fab60d741c4a42b178bc95c1b9, type: 3}
+      propertyPath: S
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7137547744926865029, guid: ff6d48fab60d741c4a42b178bc95c1b9, type: 3}
+      propertyPath: W
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1992617033172130002, guid: ff6d48fab60d741c4a42b178bc95c1b9, type: 3}
       propertyPath: m_Name
       value: Station

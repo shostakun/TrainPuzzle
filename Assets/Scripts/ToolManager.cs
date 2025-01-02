@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public delegate bool ToolLockRule(Vector3 position);
+public interface ToolLockRule
+{
+    public bool IsLocked(Track track);
+}
 
 public class ToolManager : MonoBehaviour
 {
@@ -23,7 +26,7 @@ public class ToolManager : MonoBehaviour
             if (changed) onToolChange?.Invoke(value);
         }
     }
-
+    protected ToolLockRule[] lockRules;
     public UnityAction<GameObject> onActiveTileChange;
     public UnityAction<string> onToolChange;
     public Transform trackContainer;
@@ -48,7 +51,17 @@ public class ToolManager : MonoBehaviour
         {
             Destroy(currentObj);
         }
+        lockRules = new ToolLockRule[0];
         currentTool = "";
+    }
+
+    public bool IsLocked(Track track)
+    {
+        foreach (ToolLockRule rule in lockRules)
+        {
+            if (rule.IsLocked(track)) return true;
+        }
+        return false;
     }
 
     public void PlaceObject()
@@ -89,6 +102,7 @@ public class ToolManager : MonoBehaviour
         currentObj = Instantiate(tool.prefab, trackContainer);
         currentObj.name = tool.prefab.name;
         currentObj.SetActive(false);
+        lockRules = tool.GetComponentsInChildren<ToolLockRule>();
         currentTool = tool.name;
     }
 }
