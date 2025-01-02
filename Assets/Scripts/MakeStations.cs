@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class MakeStations : MonoBehaviour
+public class MakeStations : Initializer
 {
     public int number = 2;
     public GameObject[] stationPrefabs;
     public GameObject trainPrefab;
     public Transform trainContainer;
 
-    void Start()
+    public override void Initialize()
     {
         Vector3[] positions = new Vector3[number];
         bool valid = false;

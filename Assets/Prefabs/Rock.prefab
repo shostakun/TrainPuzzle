@@ -94,4 +94,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleteButtonPrefab: {fileID: 6223587998077356317, guid: a436584f449f54e65a12ea69c3cf6003, type: 3}
-  iconPrefab: {fileID: 0}
+  iconPrefab: {fileID: 6757544014583372668, guid: 998615ec0d5964ba88304291cfa5d9d5, type: 3}

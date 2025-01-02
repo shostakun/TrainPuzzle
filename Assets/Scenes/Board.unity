@@ -1767,8 +1767,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1242898009}
+  - component: {fileID: 1242898013}
   - component: {fileID: 1242898010}
   - component: {fileID: 1242898011}
+  - component: {fileID: 1242898012}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -1823,6 +1825,38 @@ MonoBehaviour:
   - {fileID: 7218837249425590519, guid: ecd3cbfac093f47eaa05e5377b4c9522, type: 3}
   trainPrefab: {fileID: 2765742853766800004, guid: 2bfcc911b2d7147b1b1deab487ebdd9f, type: 3}
   trainContainer: {fileID: 1082962622}
+--- !u!114 &1242898012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242898008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921acc7a1d54f498cbf71e3906bcab44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxObstacles: 7
+  minObstacles: 3
+  obstaclePrefabs:
+  - {fileID: 2144661474245027705, guid: 340972e3c59ec454da00bf94ecf44ba0, type: 3}
+--- !u!114 &1242898013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242898008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8774db9765d2642ddb80f49c5987154d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initializers:
+  - {fileID: 1242898010}
+  - {fileID: 1242898011}
+  - {fileID: 1242898012}
 --- !u!1 &1330483653
 GameObject:
   m_ObjectHideFlags: 0

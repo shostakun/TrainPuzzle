@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class MakeTiles : MonoBehaviour
+public class MakeTiles : Initializer
 {
     public GameObject tilePrefab;
 
-    void Awake()
+    public override void Initialize()
     {
         int width = Board.inst.width;
         int height = Board.inst.height;
