@@ -101,6 +101,10 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 4992767631600504627, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 222458473928973573, guid: 30cc6460ff3d24a9ea5ad7e3d739c0b8, type: 3}
+    - target: {fileID: 4992767631600504627, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
       propertyPath: trackPrefab
       value: 
       objectReference: {fileID: 222458473928973573, guid: 30cc6460ff3d24a9ea5ad7e3d739c0b8, type: 3}

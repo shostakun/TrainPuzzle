@@ -97,6 +97,10 @@ PrefabInstance:
       value: TrackSWTool
       objectReference: {fileID: 0}
     - target: {fileID: 8131037338073606037, guid: cb6a42ed251244a33821a920caef8201, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 7711353705997350118, guid: 861146998889743bf9ffae14e1f0f8fa, type: 3}
+    - target: {fileID: 8131037338073606037, guid: cb6a42ed251244a33821a920caef8201, type: 3}
       propertyPath: trackPrefab
       value: 
       objectReference: {fileID: 7711353705997350118, guid: 861146998889743bf9ffae14e1f0f8fa, type: 3}

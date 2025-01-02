@@ -13,9 +13,9 @@ public class Track : MonoBehaviour
         get
         {
             if (isInUse || isStation) return true;
-            if (TrackToolManager.inst.currentObj != null)
+            if (ToolManager.inst.currentObj != null)
             {
-                List<string> toolPaths = GetPathList(TrackToolManager.inst.currentObj);
+                List<string> toolPaths = GetPathList(ToolManager.inst.currentObj);
                 string toolPathString = string.Join("", toolPaths);
                 Vector2Int addr = Board.inst.ToAddress(transform.position);
                 if (toolPathString.Contains("N") && addr.y == Board.inst.height - 1) return true;

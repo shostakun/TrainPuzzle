@@ -8,12 +8,12 @@ public class ActivateTool : MonoBehaviour
     public Image highlightImage;
     public GameObject menu;
     protected MenuSettings settings;
-    public GameObject trackPrefab;
+    public GameObject prefab;
 
     void Start()
     {
         MenuManager.inst.onMenuChange += OnMenuChange;
-        TrackToolManager.inst.onToolChange += OnToolChange;
+        ToolManager.inst.onToolChange += OnToolChange;
     }
 
     void OnEnable()
@@ -22,14 +22,14 @@ public class ActivateTool : MonoBehaviour
         backgroundImage.color = settings.backgroundColor;
         highlightImage.color = settings.inactiveColor;
         // OnMenuChange(MenuManager.inst.activeMenu);
-        // OnToolChange(TrackToolManager.inst.currentTool);
+        // OnToolChange(ToolManager.inst.currentTool);
     }
 
     public void Activate()
     {
         if (menu == null)
         {
-            TrackToolManager.inst.SetTool(this);
+            ToolManager.inst.SetTool(this);
         }
         else
         {
@@ -52,7 +52,7 @@ public class ActivateTool : MonoBehaviour
         if (menu == null) return;
         if (menu.name == menuName)
         {
-            TrackToolManager.inst.SetTool(this);
+            ToolManager.inst.SetTool(this);
             SetColor(settings.activeColor);
         }
         else
