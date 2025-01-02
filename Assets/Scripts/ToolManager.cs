@@ -103,6 +103,14 @@ public class ToolManager : MonoBehaviour
         currentObj.name = tool.prefab.name;
         currentObj.SetActive(false);
         lockRules = tool.GetComponentsInChildren<ToolLockRule>();
+        if (tool.iconImageObject != null)
+        {
+            Deletable deletable = currentObj.GetComponentInChildren<Deletable>();
+            if (deletable != null)
+            {
+                deletable.iconPrefab = tool.iconImageObject;
+            }
+        }
         currentTool = tool.name;
     }
 }

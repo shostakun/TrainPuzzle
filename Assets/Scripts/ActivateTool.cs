@@ -6,6 +6,7 @@ public class ActivateTool : MonoBehaviour
 {
     public Image backgroundImage;
     public Image highlightImage;
+    public GameObject iconImageObject;
     public GameObject menu;
     protected MenuSettings settings;
     public GameObject prefab;
