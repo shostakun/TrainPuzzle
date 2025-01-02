@@ -39,6 +39,8 @@ public class Board : MonoBehaviour
             case "W":
                 address.x--;
                 break;
+            default:
+                return null;
         }
         return IsInside(address) ? tracks[ToIndex(address)] : null;
     }

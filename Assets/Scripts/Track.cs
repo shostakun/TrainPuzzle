@@ -13,18 +13,7 @@ public class Track : MonoBehaviour
         get
         {
             if (isInUse || isStation) return true;
-            if (ToolManager.inst.currentObj != null)
-            {
-                List<string> toolPaths = GetPathList(ToolManager.inst.currentObj);
-                string toolPathString = string.Join("", toolPaths);
-                Vector2Int addr = Board.inst.ToAddress(transform.position);
-                if (toolPathString.Contains("N") && addr.y == Board.inst.height - 1) return true;
-                if (toolPathString.Contains("S") && addr.y == 0) return true;
-                if (toolPathString.Contains("E") && addr.x == Board.inst.width - 1) return true;
-                if (toolPathString.Contains("W") && addr.x == 0) return true;
-                List<string> existingPaths = GetPathList(gameObject);
-                if (existingPaths.Intersect(toolPaths).Count() > 0) return true;
-            }
+            if (ToolManager.inst.IsLocked(this)) return true;
             return false;
         }
     }
@@ -36,6 +25,19 @@ public class Track : MonoBehaviour
         StartCoroutine(Shrink(Vector3.zero, transform.position, () => Destroy(gameObject)));
     }
 
+    public List<string> GetObstacleDirections()
+    {
+        List<string> result = new List<string>();
+        foreach (Obstacle obstacle in GetComponentsInChildren<Obstacle>())
+        {
+            if (obstacle.N) result.Add("N");
+            if (obstacle.S) result.Add("S");
+            if (obstacle.E) result.Add("E");
+            if (obstacle.W) result.Add("W");
+        }
+        return result;
+    }
+
     public TrackPath GetPathFrom(string start)
     {
         var paths = GetComponentsInChildren<TrackPath>().Where(p => p.start == start).ToList();
@@ -43,7 +45,7 @@ public class Track : MonoBehaviour
         return paths[Random.Range(0, paths.Count)];
     }
 
-    static List<string> GetPathList(GameObject obj)
+    public static List<string> GetPathList(GameObject obj)
     {
         return obj.GetComponentsInChildren<TrackPath>().Select(p => p.start + p.end).ToList();
     }
