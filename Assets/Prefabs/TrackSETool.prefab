@@ -88,14 +88,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2823620464451993964, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823620464451993964, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823620464451993964, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 4992767631600504627, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
       propertyPath: trackPrefab
       value: 
       objectReference: {fileID: 2386757628833414361, guid: 6f17b2163512649f0820379310857874, type: 3}
-    - target: {fileID: 5991768764050438424, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
-      propertyPath: m_text
-      value: TrackSE
-      objectReference: {fileID: 0}
     - target: {fileID: 7187816039026287035, guid: 5bbecb9bce515442d9bfe2dc8bd7a5d0, type: 3}
       propertyPath: m_Name
       value: TrackSETool
