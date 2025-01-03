@@ -1837,8 +1837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921acc7a1d54f498cbf71e3906bcab44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxObstacles: 7
-  minObstacles: 3
+  maxObstacles: 12
+  minObstacles: 5
   obstaclePrefabs:
   - {fileID: 2144661474245027705, guid: 340972e3c59ec454da00bf94ecf44ba0, type: 3}
 --- !u!114 &1242898013
