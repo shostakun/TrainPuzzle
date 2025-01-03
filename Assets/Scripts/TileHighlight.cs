@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Track))]
 public class TileHighlight : MonoBehaviour
@@ -31,6 +31,7 @@ public class TileHighlight : MonoBehaviour
 
     void OnMouseUpAsButton()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         ToolManager.inst.PlaceObject();
     }
 
