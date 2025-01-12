@@ -452,7 +452,6 @@ Transform:
   - {fileID: 1242898009}
   - {fileID: 267301927}
   - {fileID: 1082962622}
-  - {fileID: 1673268619}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &793108395
@@ -987,7 +986,7 @@ Transform:
   m_Children:
   - {fileID: 1145501713}
   - {fileID: 333727920}
-  m_Father: {fileID: 793108394}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2020733253186432012
 PrefabInstance:
@@ -1075,6 +1074,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3720289862289115871, guid: faf435a119ad14b2fb09cd83033a33f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4003868083106758269, guid: faf435a119ad14b2fb09cd83033a33f9, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6835730720361530689, guid: faf435a119ad14b2fb09cd83033a33f9, type: 3}
@@ -1177,22 +1180,6 @@ PrefabInstance:
     - target: {fileID: 3133457939206704567, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
       propertyPath: m_Name
       value: In-Game Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199530460747392432, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199530460747392432, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199530460747392432, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6199530460747392432, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1500,4 +1487,5 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 793108394}
+  - {fileID: 1673268619}
   - {fileID: 1109118423}
