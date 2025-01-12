@@ -1,0 +1,77 @@
+using UnityEngine;
+
+public class AutoFitBoard : MonoBehaviour
+{
+    public bool center = true;
+    public float halfTileSize = 0.5f;
+    public float menuOffset = 200;
+    public float sensitivity = 0.05f;
+
+    protected Vector3 bottomLeft;
+    protected Vector3 topRight;
+    protected Vector3 topLeft;
+    protected Vector3 bottomRight;
+
+    void Start()
+    {
+        Board.inst.onInitialized += HandleInitialized;
+        HandleInitialized(Board.inst.initialized);
+    }
+
+    void Update()
+    {
+        if (center) UpdateZoom();
+    }
+
+    void UpdatePositions()
+    {
+        bottomLeft = Board.inst.GetTrack(new Vector2Int(0, 0))
+            .transform.position - new Vector3(halfTileSize, 0, halfTileSize);
+        topRight = Board.inst.GetTrack(new Vector2Int(Board.inst.width - 1, Board.inst.height - 1))
+            .transform.position + new Vector3(halfTileSize, 0, halfTileSize);
+        topLeft = new Vector3(bottomLeft.x, 0, topRight.z);
+        bottomRight = new Vector3(topRight.x, 0, bottomLeft.z);
+    }
+
+    void UpdateZoom()
+    {
+        // TODO: This is making assumptions about the camera's rotation, and I don't like that.
+        Vector3 topRightScreen = Camera.main.WorldToScreenPoint(topRight);
+        Vector3 topLeftScreen = Camera.main.WorldToScreenPoint(topLeft);
+        float top = topRightScreen.y;
+        float bottom = Camera.main.WorldToScreenPoint(bottomLeft).y;
+        float left = topLeftScreen.x;
+        float right = Camera.main.WorldToScreenPoint(bottomRight).x;
+
+        float scaleRatio = Mathf.Max(
+            (top - bottom) / Camera.main.pixelHeight,
+            (right - left) / (Camera.main.pixelWidth - menuOffset));
+        float targetSize = scaleRatio * Camera.main.orthographicSize;
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetSize, sensitivity);
+
+        Vector3 targetPosition = TargetPositionForOffset(
+            (Camera.main.pixelWidth - right - (left - menuOffset)) / 2,
+            (Camera.main.pixelHeight - top - bottom) / 2);
+        Camera.main.transform.position = Vector3.Lerp(
+            Camera.main.transform.position, targetPosition, sensitivity);
+    }
+
+    void HandleInitialized(bool initialized)
+    {
+        if (initialized) UpdatePositions();
+    }
+
+    Vector3 TargetPositionForOffset(float x, float y)
+    {
+        // Lerp the camera position so that the board is centered, leaving space on the left for the menu,
+        // accounting for the rotation of the camera, and keeping the camera the same distance from the board.
+        // TODO: This is making assumptions about the camera's rotation, and I don't like that.
+        Vector3 topLeftScreen = Camera.main.WorldToScreenPoint(topLeft);
+        Vector3 topRightScreen = Camera.main.WorldToScreenPoint(topRight);
+        topLeftScreen.x += x;
+        topRightScreen.y += y;
+        Vector3 xOffset = topLeft - Camera.main.ScreenToWorldPoint(topLeftScreen);
+        Vector3 yOffset = topRight - Camera.main.ScreenToWorldPoint(topRightScreen);
+        return Camera.main.transform.position + xOffset + yOffset;
+    }
+}
