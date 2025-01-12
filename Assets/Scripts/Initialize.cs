@@ -15,5 +15,6 @@ public class Initialize : MonoBehaviour
         {
             initializer.Initialize();
         }
+        Board.inst.initialized = true;
     }
 }

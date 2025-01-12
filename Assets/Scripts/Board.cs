@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Board : MonoBehaviour
 {
@@ -7,6 +8,17 @@ public class Board : MonoBehaviour
     public int width = 10;
     public int height = 8;
     public Vector2Int highlight { get; protected set; } = new Vector2Int(-1, -1);
+    private bool initialized_ = false;
+    public bool initialized
+    {
+        get => initialized_;
+        set
+        {
+            initialized_ = value;
+            onInitialized?.Invoke(initialized_);
+        }
+    }
+    public UnityAction<bool> onInitialized;
     private Track[] tracks;
 
     protected void Awake()
