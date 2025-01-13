@@ -29,7 +29,7 @@ public class TileHighlight : MonoBehaviour
         ToolManager.inst.SetActiveTile(null);
     }
 
-    void OnMouseUpAsButton()
+    public void PlaceObject()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
         ToolManager.inst.PlaceObject();
