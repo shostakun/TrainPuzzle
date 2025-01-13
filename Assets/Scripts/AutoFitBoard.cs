@@ -2,7 +2,17 @@ using UnityEngine;
 
 public class AutoFitBoard : MonoBehaviour
 {
-    public bool center = true;
+    private bool center_ = true;
+    public bool center
+    {
+        get => center_;
+        set
+        {
+            center_ = value;
+            if (centeringUI) centeringUI.SetActive(!value);
+        }
+    }
+    public GameObject centeringUI;
     public float halfTileSize = 0.5f;
     public float menuOffset = 200;
     public float sensitivity = 0.05f;
@@ -14,6 +24,7 @@ public class AutoFitBoard : MonoBehaviour
 
     void Start()
     {
+        center = true;
         Board.inst.onInitialized += HandleInitialized;
         HandleInitialized(Board.inst.initialized);
     }
@@ -54,6 +65,11 @@ public class AutoFitBoard : MonoBehaviour
             (Camera.main.pixelHeight - top - bottom) / 2);
         Camera.main.transform.position = Vector3.Lerp(
             Camera.main.transform.position, targetPosition, sensitivity);
+    }
+
+    public void EnableCentering(bool enable)
+    {
+        center = enable;
     }
 
     void HandleInitialized(bool initialized)
