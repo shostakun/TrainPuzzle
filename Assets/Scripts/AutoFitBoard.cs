@@ -46,7 +46,11 @@ public class AutoFitBoard : MonoBehaviour
         {
             LeanFinger finger = fingers[0];
             if (finger.StartedOverGui) return;
-            if (!finger.Tap)
+            if (finger.TapCount == 2)
+            {
+                center = true;
+            }
+            else if (finger.ScreenDelta != Vector2.zero)
             {
                 Vector2 delta = finger.ScreenDelta;
                 if (delta != Vector2.zero)
