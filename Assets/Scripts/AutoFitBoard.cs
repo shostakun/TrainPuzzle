@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
 
@@ -40,8 +41,22 @@ public class AutoFitBoard : MonoBehaviour
 
     void UpdateGesture()
     {
-        var fingers = Use.UpdateAndGetFingers();
-        var pinchScale = LeanGesture.GetPinchRatio(fingers);
+        List<LeanFinger> fingers = Use.UpdateAndGetFingers();
+        if (fingers.Count == 1)
+        {
+            LeanFinger finger = fingers[0];
+            if (finger.StartedOverGui) return;
+            if (!finger.Tap)
+            {
+                Vector2 delta = finger.ScreenDelta;
+                if (delta != Vector2.zero)
+                {
+                    center = false;
+                    Camera.main.transform.position = TargetPositionForOffset(delta.x, delta.y);
+                }
+            }
+        }
+        float pinchScale = LeanGesture.GetPinchRatio(fingers);
         if (pinchScale != 1.0f)
         {
             center = false;
@@ -61,7 +76,6 @@ public class AutoFitBoard : MonoBehaviour
 
     void UpdateScroll()
     {
-        // Scroll = zoom in.
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
@@ -110,7 +124,7 @@ public class AutoFitBoard : MonoBehaviour
 
     Vector3 TargetPositionForOffset(float x, float y)
     {
-        // Lerp the camera position so that the board is centered, leaving space on the left for the menu,
+        // Camera position so that the board is centered, leaving space on the left for the menu,
         // accounting for the rotation of the camera, and keeping the camera the same distance from the board.
         // TODO: This is making assumptions about the camera's rotation, and I don't like that.
         Vector3 topLeftScreen = Camera.main.WorldToScreenPoint(topLeft);

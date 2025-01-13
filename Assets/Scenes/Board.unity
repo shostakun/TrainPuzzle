@@ -156,7 +156,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -20, y: 20}
-  m_SizeDelta: {x: 40, y: 40}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &203089239
 MonoBehaviour:
@@ -436,7 +436,7 @@ MonoBehaviour:
   centeringUI: {fileID: 203089237}
   halfTileSize: 0.5
   menuOffset: 200
-  sensitivity: 0.05
+  sensitivity: 0.15
 --- !u!224 &333727920 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3720289862289115871, guid: faf435a119ad14b2fb09cd83033a33f9, type: 3}
