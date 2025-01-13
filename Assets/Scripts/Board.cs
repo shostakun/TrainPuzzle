@@ -66,10 +66,20 @@ public class Board : MonoBehaviour
 
     public void NewBoard(BoardSize size)
     {
+        SaveData.inst.Clear();
+        Initialize(size);
+    }
+
+    public void Initialize(BoardSize size)
+    {
         this.size = size;
         foreach (Track track in tracks) if (track != null) track.Erase();
         tracks = new Track[width * height];
         initialized = false;
+        foreach (Initialize initialize in GetComponentsInChildren<Initialize>())
+        {
+            initialize.DoInitialization();
+        }
     }
 
     public Track GetNeighbor(Track track, string direction)

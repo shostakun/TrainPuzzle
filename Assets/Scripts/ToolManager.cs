@@ -95,9 +95,8 @@ public class ToolManager : MonoBehaviour
         }
         if (!track.isLocked)
         {
-            GameObject go = Instantiate(currentObj, currentObj.transform.position,
-                currentObj.transform.rotation, track.transform);
-            go.name = currentObj.name;
+            track.AddInstance(currentObj);
+            SaveData.inst.Save();
         }
         foreach (ToolRefresher refresher in currentObj.GetComponentsInChildren<ToolRefresher>())
         {
@@ -131,14 +130,6 @@ public class ToolManager : MonoBehaviour
         currentObj.name = tool.prefab.name;
         currentObj.SetActive(false);
         lockRules = tool.GetComponentsInChildren<ToolLockRule>();
-        if (tool.iconImageObject != null)
-        {
-            Deletable deletable = currentObj.GetComponentInChildren<Deletable>();
-            if (deletable != null)
-            {
-                deletable.iconPrefab = tool.iconImageObject;
-            }
-        }
         currentTool = tool.name;
     }
 }

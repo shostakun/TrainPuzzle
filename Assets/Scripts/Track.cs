@@ -20,6 +20,13 @@ public class Track : MonoBehaviour
     public UnityAction onTrainEnter;
     public UnityAction onTrainExit;
 
+    public GameObject AddInstance(GameObject prefab)
+    {
+        GameObject instance = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        instance.name = prefab.name;
+        return instance;
+    }
+
     public void Erase()
     {
         StartCoroutine(Shrink(Vector3.zero, transform.position, () => Destroy(gameObject)));

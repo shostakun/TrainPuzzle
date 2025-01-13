@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Library/Application Support/DefaultCompany/Train Game"
+		}
+	],
+	"settings": {
+		"dotnet.defaultSolution": "TrainGame.sln"
+	}
+}

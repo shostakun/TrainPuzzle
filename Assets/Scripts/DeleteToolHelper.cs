@@ -10,5 +10,6 @@ public class DeleteToolHelper : MonoBehaviour
         if (deletables.Length < 1) return;
         DeleteMenuManager.inst.ShowItems(deletables);
         Destroy(gameObject);
+        SaveData.inst.Save();
     }
 }

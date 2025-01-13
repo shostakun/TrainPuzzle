@@ -12,7 +12,8 @@ public class MakeTiles : Initializer
         {
             for (int z = 0; z < height; z++)
             {
-                GameObject go = Instantiate(tilePrefab, transform.position + new Vector3(x, 0, z), Quaternion.identity, transform);
+                GameObject go = Instantiate(tilePrefab, transform.position + new Vector3(x, 0, z),
+                    Quaternion.identity, transform);
                 go.name = $"Tile ({x}, {z})";
                 Board.inst.SetTrack(go.GetComponent<Track>());
             }
