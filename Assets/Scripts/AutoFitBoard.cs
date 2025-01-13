@@ -55,12 +55,13 @@ public class AutoFitBoard : MonoBehaviour
                     Camera.main.transform.position = TargetPositionForOffset(delta.x, delta.y);
                 }
             }
+            return;
         }
         float pinchScale = LeanGesture.GetPinchRatio(fingers);
         if (pinchScale != 1.0f)
         {
             center = false;
-            SetCameraSize(Camera.main.orthographicSize * pinchScale);
+            ScaleAroundPoint(pinchScale, LeanGesture.GetScreenCenter(fingers));
         }
     }
 
@@ -80,7 +81,7 @@ public class AutoFitBoard : MonoBehaviour
         if (scroll != 0)
         {
             center = false;
-            SetCameraSize(Camera.main.orthographicSize * 1 - scroll);
+            ScaleAroundPoint(1 - scroll, Input.mousePosition);
         }
     }
 
@@ -115,6 +116,19 @@ public class AutoFitBoard : MonoBehaviour
     void HandleInitialized(bool initialized)
     {
         if (initialized) UpdatePositions();
+    }
+
+    void ScaleAroundPoint(float scale, Vector2 startPosition)
+    {
+        Vector3? worldPosition = HandleTouch.GetWorldPosition(startPosition);
+        SetCameraSize(Camera.main.orthographicSize * scale);
+        if (worldPosition.HasValue)
+        {
+            // Adjust the camera position so that the world position under the mouse stays the same.
+            Vector2 endPosition = Camera.main.WorldToScreenPoint(worldPosition.Value);
+            Vector2 offset = startPosition - endPosition;
+            Camera.main.transform.position = TargetPositionForOffset(offset.x, offset.y);
+        }
     }
 
     void SetCameraSize(float size)
