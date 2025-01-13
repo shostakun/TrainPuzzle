@@ -14,17 +14,24 @@ public class HandleTouch : MonoBehaviour
         LeanTouch.OnFingerTap -= HandleFingerTap;
     }
 
-    void HandleFingerTap(LeanFinger finger)
+    static void HandleFingerTap(LeanFinger finger)
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(finger.ScreenPosition);
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 100f))
+            Vector3? worldPosition = GetWorldPosition(finger.ScreenPosition);
+            if (worldPosition.HasValue)
             {
-                TileHighlight highlight = hit.collider.GetComponent<TileHighlight>();
+                TileHighlight highlight = Board.inst.GetTrack(worldPosition.Value)?.GetComponent<TileHighlight>();
                 if (highlight != null) highlight.PlaceObject();
             }
         }
+    }
+
+    public static Vector3? GetWorldPosition(Vector2 screenPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        if (plane.Raycast(ray, out float distance)) return ray.GetPoint(distance);
+        return null;
     }
 }
