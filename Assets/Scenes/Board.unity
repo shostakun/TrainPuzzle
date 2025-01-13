@@ -1298,7 +1298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1551228090
 Transform:
   m_ObjectHideFlags: 0
@@ -1620,6 +1620,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 301476035012974833, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 301476035012974833, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 32.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 301476035012974833, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -16
       objectReference: {fileID: 0}
@@ -1762,6 +1770,14 @@ PrefabInstance:
     - target: {fileID: 6199530460747392432, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052391898003102002, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
+      propertyPath: managedReferences[3050789919735677157].m_VariantData.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052391898003102002, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
+      propertyPath: managedReferences[3050789919735677158].m_VariantData.Array.data[0].value
+      value: 32.85
       objectReference: {fileID: 0}
     - target: {fileID: 8578329227514983133, guid: 16c2c0ee6b2e34c1dbb93efbbc583ed5, type: 3}
       propertyPath: m_AnchorMax.y
