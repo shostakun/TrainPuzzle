@@ -8,6 +8,36 @@ public class MakeStations : Initializer
 
     public override void Initialize()
     {
+        if (SaveData.inst.stationSettings.Count > 0)
+        {
+            LoadStations();
+        }
+        else
+        {
+            MakeNewStations();
+        }
+    }
+
+    void LoadStations()
+    {
+        for (int i = 0; i < SaveData.inst.stationSettings.Count; i++)
+        {
+            StationSettings settings = SaveData.inst.stationSettings[i];
+            foreach (GameObject prefab in stationPrefabs)
+            {
+                if (prefab.name == settings.prefabName)
+                {
+                    Track tile = Board.inst.GetTrack(settings.addr);
+                    tile.AddInstance(prefab);
+                    if (i == 0) MakeTrain(tile.transform.position, tile);
+                    break;
+                }
+            }
+        }
+    }
+
+    void MakeNewStations()
+    {
         // Clear the existing trains.
         foreach (Transform child in trainContainer)
         {
@@ -56,15 +86,19 @@ public class MakeStations : Initializer
                 continue;
             }
             track.isStation = true;
-            GameObject station = Instantiate(stationPrefab, position, Quaternion.identity, track.transform);
-            station.name = stationPrefab.name;
+            track.AddInstance(stationPrefab);
             if (i == 0)
             {
-                position.y = trainContainer.position.y;
-                GameObject train = Instantiate(trainPrefab, position, Quaternion.identity, trainContainer);
-                train.name = trainPrefab.name;
-                train.GetComponent<Move>().SetStartTrack(track);
+                MakeTrain(position, track);
             }
         }
+    }
+
+    void MakeTrain(Vector3 position, Track track)
+    {
+        position.y = trainContainer.position.y;
+        GameObject train = Instantiate(trainPrefab, position, Quaternion.identity, trainContainer);
+        train.name = trainPrefab.name;
+        train.GetComponent<Move>().SetStartTrack(track);
     }
 }

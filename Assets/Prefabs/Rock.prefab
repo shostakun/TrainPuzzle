@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8243283932112751317}
   - component: {fileID: 7023710420458954884}
   - component: {fileID: 1828614285884577039}
+  - component: {fileID: -2204165333643284615}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Untagged
@@ -95,3 +96,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deleteButtonPrefab: {fileID: 6223587998077356317, guid: a436584f449f54e65a12ea69c3cf6003, type: 3}
   iconPrefab: {fileID: 6757544014583372668, guid: 998615ec0d5964ba88304291cfa5d9d5, type: 3}
+--- !u!114 &-2204165333643284615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144661474245027705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 352392edae61344dfb6e96a81153a2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

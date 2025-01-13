@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 366154647756400027, guid: 861146998889743bf9ffae14e1f0f8fa, type: 3}
+      propertyPath: iconPrefab
+      value: 
+      objectReference: {fileID: 5647949941093183001, guid: b1dbc8fe87311401fb52e994430bc3fa, type: 3}
     - target: {fileID: 1678488850064990579, guid: 861146998889743bf9ffae14e1f0f8fa, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0

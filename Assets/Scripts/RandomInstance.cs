@@ -13,15 +13,21 @@ public class RandomInstance : MonoBehaviour, ToolRefresher
 
     public void Refresh()
     {
+        RefreshWithPrefab(
+            prefabs[Random.Range(0, prefabs.Length)],
+            Quaternion.Euler(0, Random.Range(0, 360), 0));
+    }
+
+    public void RefreshWithPrefab(GameObject prefab, Quaternion rotation)
+    {
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
-        int index = Random.Range(0, prefabs.Length);
-        GameObject go = Instantiate(prefabs[index], transform);
-        go.name = prefabs[index].name;
+        GameObject go = Instantiate(prefab, transform);
+        go.name = prefab.name;
         go.transform.position += offset;
         go.transform.localScale = Vector3.one * scale;
-        go.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        go.transform.rotation = rotation;
     }
 }

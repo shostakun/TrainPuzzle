@@ -8,7 +8,7 @@ public class ActivateTool : MonoBehaviour
     public bool closeSubMenus = false;
     protected bool hasSubMenu => menu != null;
     public Image highlightImage;
-    public GameObject iconImageObject;
+    public GameObject iconContainer;
     public GameObject menu;
     protected MenuSettings settings;
     public GameObject prefab;
@@ -17,6 +17,7 @@ public class ActivateTool : MonoBehaviour
     {
         MenuManager.inst.onMenuChange += OnMenuChange;
         ToolManager.inst.onToolChange += OnToolChange;
+        SetIcon();
     }
 
     void OnDestroy()
@@ -30,8 +31,6 @@ public class ActivateTool : MonoBehaviour
         settings = GetComponentInParent<MenuSettings>();
         backgroundImage.color = (hasSubMenu || closeSubMenus) ? settings.backgroundColor : settings.subMenuColor;
         highlightImage.color = settings.inactiveColor;
-        // OnMenuChange(MenuManager.inst.activeMenu);
-        // OnToolChange(ToolManager.inst.currentTool);
     }
 
     public void Activate()
@@ -95,5 +94,17 @@ public class ActivateTool : MonoBehaviour
         {
             highlightImage.color = color;
         }
+    }
+
+    void SetIcon()
+    {
+        if (iconContainer == null || prefab == null) return;
+        Deletable deletable = prefab.GetComponent<Deletable>();
+        if (deletable == null || deletable.iconPrefab == null) return;
+        foreach (Transform child in iconContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        Instantiate(deletable.iconPrefab, iconContainer.transform);
     }
 }
