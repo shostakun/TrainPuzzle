@@ -1,3 +1,4 @@
+using Lean.Touch;
 using UnityEngine;
 
 public class AutoFitBoard : MonoBehaviour
@@ -16,6 +17,7 @@ public class AutoFitBoard : MonoBehaviour
     public float halfTileSize = 0.5f;
     public float menuOffset = 200;
     public float sensitivity = 0.05f;
+    protected LeanFingerFilter Use = new LeanFingerFilter(true);
 
     protected Vector3 bottomLeft;
     protected Vector3 topRight;
@@ -31,7 +33,20 @@ public class AutoFitBoard : MonoBehaviour
 
     void Update()
     {
+        UpdateGesture();
+        UpdateScroll();
         if (center) UpdateZoom();
+    }
+
+    void UpdateGesture()
+    {
+        var fingers = Use.UpdateAndGetFingers();
+        var pinchScale = LeanGesture.GetPinchRatio(fingers);
+        if (pinchScale != 1.0f)
+        {
+            center = false;
+            SetCameraSize(Camera.main.orthographicSize * pinchScale);
+        }
     }
 
     void UpdatePositions()
@@ -42,6 +57,17 @@ public class AutoFitBoard : MonoBehaviour
             .transform.position + new Vector3(halfTileSize, 0, halfTileSize);
         topLeft = new Vector3(bottomLeft.x, 0, topRight.z);
         bottomRight = new Vector3(topRight.x, 0, bottomLeft.z);
+    }
+
+    void UpdateScroll()
+    {
+        // Scroll = zoom in.
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0)
+        {
+            center = false;
+            SetCameraSize(Camera.main.orthographicSize * 1 - scroll);
+        }
     }
 
     void UpdateZoom()
@@ -58,7 +84,7 @@ public class AutoFitBoard : MonoBehaviour
             (top - bottom) / Camera.main.pixelHeight,
             (right - left) / (Camera.main.pixelWidth - menuOffset));
         float targetSize = scaleRatio * Camera.main.orthographicSize;
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetSize, sensitivity);
+        SetCameraSize(Mathf.Lerp(Camera.main.orthographicSize, targetSize, sensitivity));
 
         Vector3 targetPosition = TargetPositionForOffset(
             (Camera.main.pixelWidth - right - (left - menuOffset)) / 2,
@@ -75,6 +101,11 @@ public class AutoFitBoard : MonoBehaviour
     void HandleInitialized(bool initialized)
     {
         if (initialized) UpdatePositions();
+    }
+
+    void SetCameraSize(float size)
+    {
+        Camera.main.orthographicSize = Mathf.Clamp(size, 0.5f, 30f);
     }
 
     Vector3 TargetPositionForOffset(float x, float y)
