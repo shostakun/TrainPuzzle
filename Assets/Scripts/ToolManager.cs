@@ -94,7 +94,11 @@ public class ToolManager : MonoBehaviour
             return;
         }
         if (!track.isLocked)
-            Instantiate(currentObj, currentObj.transform.position, currentObj.transform.rotation, track.transform);
+        {
+            GameObject go = Instantiate(currentObj, currentObj.transform.position,
+                currentObj.transform.rotation, track.transform);
+            go.name = currentObj.name;
+        }
         foreach (ToolRefresher refresher in currentObj.GetComponentsInChildren<ToolRefresher>())
         {
             refresher.Refresh();

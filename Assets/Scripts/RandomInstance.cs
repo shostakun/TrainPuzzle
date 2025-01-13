@@ -19,6 +19,7 @@ public class RandomInstance : MonoBehaviour, ToolRefresher
         }
         int index = Random.Range(0, prefabs.Length);
         GameObject go = Instantiate(prefabs[index], transform);
+        go.name = prefabs[index].name;
         go.transform.position += offset;
         go.transform.localScale = Vector3.one * scale;
         go.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);

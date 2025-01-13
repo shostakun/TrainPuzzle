@@ -62,6 +62,7 @@ public class MakeStations : Initializer
             {
                 position.y = trainContainer.position.y;
                 GameObject train = Instantiate(trainPrefab, position, Quaternion.identity, trainContainer);
+                train.name = trainPrefab.name;
                 train.GetComponent<Move>().SetStartTrack(track);
             }
         }
