@@ -2,14 +2,23 @@ using UnityEngine;
 
 public class MakeStations : Initializer
 {
-    public int number = 2;
     public GameObject[] stationPrefabs;
     public GameObject trainPrefab;
     public Transform trainContainer;
 
     public override void Initialize()
     {
+        // Clear the existing trains.
+        foreach (Transform child in trainContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int number = Board.inst.settings.stations;
         Vector3[] positions = new Vector3[number];
+
+        // Choose random positions with adequate spacing.
+        float minDistance = Board.inst.settings.minDistance;
         bool valid = false;
         while (!valid)
         {
@@ -22,7 +31,7 @@ public class MakeStations : Initializer
             {
                 for (int j = i + 1; j < number; j++)
                 {
-                    if (Vector3.Distance(positions[i], positions[j]) < 3)
+                    if (Vector3.Distance(positions[i], positions[j]) < minDistance)
                     {
                         valid = false;
                         break;
@@ -34,6 +43,8 @@ public class MakeStations : Initializer
                 }
             }
         }
+
+        // Place stations and trains.
         for (int i = 0; i < number; i++)
         {
             GameObject stationPrefab = stationPrefabs[Random.Range(0, stationPrefabs.Length)];

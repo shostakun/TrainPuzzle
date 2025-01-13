@@ -15,8 +15,8 @@ MonoBehaviour:
   m_TableCollectionName: String Table
   m_TableCollectionNameGuidString: 4c270ccb779f94d6ba3f06327f45c2fd
   m_Entries:
-  - m_Id: 2374432186368
-    m_Key: In-Game Menu/Prefab Mode in Context/In-Game Menu/Content/Placeholder
+  - m_Id: 337815362592768
+    m_Key: Board/UI/Canvas/In-Game Menu/Content/New Board/Label
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -22,6 +22,11 @@ public class OpenButtonAnimation : MonoBehaviour
         yOffset = top.transform.localPosition.y;
     }
 
+    void OnDestroy()
+    {
+        InGameMenuManager.inst.onOpenChange -= OnOpenChange;
+    }
+
     void OnOpenChange(bool open)
     {
         StartCoroutine(open ? Open() : Close());

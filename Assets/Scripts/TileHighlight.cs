@@ -19,6 +19,12 @@ public class TileHighlight : MonoBehaviour
         track = GetComponent<Track>();
     }
 
+    void OnDestroy()
+    {
+        ToolManager.inst.onActiveTileChange -= SetHighlight;
+        ToolManager.inst.onToolChange -= SetHighlight;
+    }
+
     void OnMouseEnter()
     {
         ToolManager.inst.SetActiveTile(gameObject);
