@@ -48,6 +48,16 @@ public class ToolManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        Board.inst.onInitialized += HandleInitialized;
+    }
+
+    void OnDestroy()
+    {
+        Board.inst.onInitialized -= HandleInitialized;
+    }
+
     public void ClearTool()
     {
         activeTile = null;
@@ -58,6 +68,11 @@ public class ToolManager : MonoBehaviour
         }
         lockRules = new ToolLockRule[0];
         currentTool = "";
+    }
+
+    void HandleInitialized(bool initialized)
+    {
+        if (initialized) ClearTool();
     }
 
     public bool IsLocked(Track track)

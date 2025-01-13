@@ -1,12 +1,42 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
+
+public enum BoardSize
+{
+    Small,
+    Medium,
+    Large
+}
 
 public class Board : MonoBehaviour
 {
     public static Board inst { get; private set; }
 
-    public int width = 10;
-    public int height = 8;
+    public BoardSize size = BoardSize.Medium;
+    [Expandable]
+    public BoardSettings small;
+    [Expandable]
+    public BoardSettings medium;
+    [Expandable]
+    public BoardSettings large;
+
+    public BoardSettings settings
+    {
+        get
+        {
+            switch (size)
+            {
+                case BoardSize.Small: return small;
+                case BoardSize.Medium: return medium;
+                case BoardSize.Large: return large;
+                default: return medium;
+            }
+        }
+    }
+
+    public int width => settings.width;
+    public int height => settings.height;
     public Vector2Int highlight { get; protected set; } = new Vector2Int(-1, -1);
     private bool initialized_ = false;
     public bool initialized
@@ -32,6 +62,14 @@ public class Board : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void NewBoard(BoardSize size)
+    {
+        this.size = size;
+        foreach (Track track in tracks) if (track != null) track.Erase();
+        tracks = new Track[width * height];
+        initialized = false;
     }
 
     public Track GetNeighbor(Track track, string direction)

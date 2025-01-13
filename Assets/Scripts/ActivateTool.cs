@@ -19,6 +19,12 @@ public class ActivateTool : MonoBehaviour
         ToolManager.inst.onToolChange += OnToolChange;
     }
 
+    void OnDestroy()
+    {
+        MenuManager.inst.onMenuChange -= OnMenuChange;
+        ToolManager.inst.onToolChange -= OnToolChange;
+    }
+
     void OnEnable()
     {
         settings = GetComponentInParent<MenuSettings>();

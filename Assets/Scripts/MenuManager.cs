@@ -41,8 +41,14 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        Board.inst.onInitialized += HandleInitialized;
         settings = GetComponent<MenuSettings>();
         ShowActiveMenu();
+    }
+
+    void OnDestroy()
+    {
+        Board.inst.onInitialized -= HandleInitialized;
     }
 
     void Update()
@@ -58,6 +64,11 @@ public class MenuManager : MonoBehaviour
                 activeMenu = "";
             }
         }
+    }
+
+    public void HandleInitialized(bool initialized)
+    {
+        if (initialized) activeMenu = "";
     }
 
     IEnumerator FadeTo(GameObject menu, float targetAlpha)

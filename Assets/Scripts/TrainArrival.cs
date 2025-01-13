@@ -17,6 +17,11 @@ public class TrainArrival : MonoBehaviour
         track.onTrainEnter += OnTrainEnter;
     }
 
+    void OnDestroy()
+    {
+        track.onTrainEnter -= OnTrainEnter;
+    }
+
     IEnumerator GrowStar()
     {
         while (star.transform.localScale.x < baseScale)

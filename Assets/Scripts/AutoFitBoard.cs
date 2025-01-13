@@ -32,6 +32,11 @@ public class AutoFitBoard : MonoBehaviour
         HandleInitialized(Board.inst.initialized);
     }
 
+    void OnDestroy()
+    {
+        Board.inst.onInitialized -= HandleInitialized;
+    }
+
     void Update()
     {
         UpdateGesture();
@@ -119,7 +124,11 @@ public class AutoFitBoard : MonoBehaviour
 
     void HandleInitialized(bool initialized)
     {
-        if (initialized) UpdatePositions();
+        if (initialized)
+        {
+            center = true;
+            UpdatePositions();
+        }
     }
 
     void ScaleAroundPoint(float scale, Vector2 startPosition)
