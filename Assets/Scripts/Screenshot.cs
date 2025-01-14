@@ -12,15 +12,25 @@ public class Screenshot : MonoBehaviour
 
     public void Take(string filePath)
     {
+        int width = targetCamera.pixelWidth;
+        int height = targetCamera.pixelHeight;
+        AutoFitBoard fitter = targetCamera.GetComponent<AutoFitBoard>();
+        if (fitter != null)
+        {
+            var size = fitter.GetBoardRect();
+            width = (int)Mathf.Ceil(size.width);
+            height = (int)Mathf.Ceil(size.height);
+        }
+
         // Capture the screen.
-        RenderTexture rt = new RenderTexture(targetCamera.pixelWidth, targetCamera.pixelHeight, 24);
+        RenderTexture rt = new RenderTexture(width, height, 24);
         targetCamera.targetTexture = rt;
         targetCamera.Render();
         RenderTexture.active = rt;
 
         // Create a Texture2D to hold the captured image.
-        Texture2D screenShot = new Texture2D(targetCamera.pixelWidth, targetCamera.pixelHeight);
-        screenShot.ReadPixels(new Rect(0, 0, targetCamera.pixelWidth, targetCamera.pixelHeight), 0, 0);
+        Texture2D screenShot = new Texture2D(width, height);
+        screenShot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         targetCamera.targetTexture = null;
         RenderTexture.active = null; // Clean up.
 

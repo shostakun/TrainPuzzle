@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Lean.Touch;
 using UnityEngine;
 
@@ -19,8 +20,8 @@ public class AutoFitBoard : MonoBehaviour
     public GameObject centeringUI;
     public float halfTileSize = 0.5f;
     public bool interactive = true;
-    public bool matchAspectRatio = false;
     public float menuOffset = 200;
+    // public float padding = 10; // TODO: Implement padding.
     public float sensitivity = 0.05f;
     protected LeanFingerFilter Use = new LeanFingerFilter(true);
 
@@ -104,30 +105,17 @@ public class AutoFitBoard : MonoBehaviour
 
     void UpdateZoom()
     {
-        // TODO: This is making assumptions about the camera's rotation, and I don't like that.
-        Vector3 topRightScreen = targetCamera.WorldToScreenPoint(topRight);
-        Vector3 topLeftScreen = targetCamera.WorldToScreenPoint(topLeft);
-        float top = topRightScreen.y;
-        float bottom = targetCamera.WorldToScreenPoint(bottomLeft).y;
-        float left = topLeftScreen.x;
-        float right = targetCamera.WorldToScreenPoint(bottomRight).x;
-
-        if (matchAspectRatio)
-        {
-            // TODO: Make this work...
-            Debug.Log($"Current aspect ratio: {targetCamera.aspect} {(float)targetCamera.pixelWidth / (float)targetCamera.pixelHeight} {(right - left) / (top - bottom)}");
-            targetCamera.aspect = (right - left) / (top - bottom);
-        }
+        Rect rect = GetBoardRect();
 
         float scaleRatio = Mathf.Max(
-            (top - bottom) / targetCamera.pixelHeight,
-            (right - left) / (targetCamera.pixelWidth - menuOffset));
+            rect.height / targetCamera.pixelHeight,
+            rect.width / (targetCamera.pixelWidth - menuOffset));
         float targetSize = scaleRatio * targetCamera.orthographicSize;
         SetCameraSize(Mathf.Lerp(targetCamera.orthographicSize, targetSize, sensitivity));
 
         Vector3 targetPosition = TargetPositionForOffset(
-            (targetCamera.pixelWidth - right - (left - menuOffset)) / 2,
-            (targetCamera.pixelHeight - top - bottom) / 2);
+            (targetCamera.pixelWidth - rect.xMax - (rect.xMin - menuOffset)) / 2,
+            (targetCamera.pixelHeight - rect.yMax - rect.yMin) / 2);
         targetCamera.transform.position = Vector3.Lerp(
             targetCamera.transform.position, targetPosition, sensitivity);
     }
@@ -144,6 +132,18 @@ public class AutoFitBoard : MonoBehaviour
     public void EnableCentering(bool enable)
     {
         center = enable;
+    }
+
+    public Rect GetBoardRect()
+    {
+        Vector3[] points = new Vector3[] { bottomLeft, topRight, topLeft, bottomRight };
+        for (int i = 0; i < points.Length; i++)
+            points[i] = targetCamera.WorldToScreenPoint(points[i]);
+        float top = points.Max(p => p.y);
+        float bottom = points.Min(p => p.y);
+        float left = points.Min(p => p.x);
+        float right = points.Max(p => p.x);
+        return new Rect(left, bottom, right - left, top - bottom);
     }
 
     void HandleInitialized(bool initialized)
