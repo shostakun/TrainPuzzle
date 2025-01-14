@@ -13,6 +13,7 @@ public class Board : MonoBehaviour
 {
     public static Board inst { get; private set; }
 
+    [ReadOnly]
     public BoardSize size = BoardSize.Medium;
     [Expandable]
     public BoardSettings small;
