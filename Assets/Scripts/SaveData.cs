@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Savable : MonoBehaviour
@@ -16,15 +15,18 @@ public class Savable : MonoBehaviour
     }
 }
 
-public class SaveData : MonoBehaviour
+public class SaveData : SaveFileBase
 {
     public static SaveData inst;
 
-    protected string fileName = "/saveData.json";
+    protected override string filePath => SaveFileManager.inst.dataFilePath;
 
     public BoardSize boardSize;
+    [ReadOnly]
     public List<RockSettings> rockSettings;
+    [ReadOnly]
     public List<StationSettings> stationSettings;
+    [ReadOnly]
     public List<TrackSettings> trackSettings;
 
     void Awake()
@@ -45,57 +47,26 @@ public class SaveData : MonoBehaviour
         Load();
     }
 
-    public void Clear()
-    {
-        boardSize = BoardSize.Medium;
-        rockSettings = new List<RockSettings>();
-        stationSettings = new List<StationSettings>();
-        trackSettings = new List<TrackSettings>();
-    }
-
-    protected void Initialize()
+    protected override void AfterLoad()
     {
         Board.inst.Initialize(boardSize);
     }
 
-    protected void Load()
-    {
-        try
-        {
-            string filepath = Application.persistentDataPath + fileName;
-            if (File.Exists(filepath))
-            {
-                using (StreamReader sr = new StreamReader(Application.persistentDataPath + fileName))
-                {
-                    JsonUtility.FromJsonOverwrite(sr.ReadToEnd(), this);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        Initialize();
-    }
-
-    public void Save()
+    protected override void BeforeSave()
     {
         Clear();
         foreach (Savable savable in GetComponentsInChildren<Savable>())
         {
             savable.UpdateSaveData(this);
         }
+        SaveFileManager.inst.Save();
+    }
 
-        try
-        {
-            using (StreamWriter sw = new StreamWriter(Application.persistentDataPath + fileName))
-            {
-                sw.Write(JsonUtility.ToJson(this));
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
+    public void Clear()
+    {
+        boardSize = BoardSize.Medium;
+        rockSettings = new List<RockSettings>();
+        stationSettings = new List<StationSettings>();
+        trackSettings = new List<TrackSettings>();
     }
 }
