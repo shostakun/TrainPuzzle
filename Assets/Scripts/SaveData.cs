@@ -19,7 +19,7 @@ public class SaveData : SaveFileBase
 {
     public static SaveData inst;
 
-    protected override string filePath => SaveFileManager.inst.dataFilePath;
+    protected override string filePath => SaveFileManager.inst.GetFilePath();
 
     public BoardSize boardSize;
     [ReadOnly]
@@ -28,6 +28,8 @@ public class SaveData : SaveFileBase
     public List<StationSettings> stationSettings;
     [ReadOnly]
     public List<TrackSettings> trackSettings;
+
+    protected Screenshot screenshot;
 
     void Awake()
     {
@@ -45,11 +47,17 @@ public class SaveData : SaveFileBase
     void Start()
     {
         Load();
+        screenshot = GetComponent<Screenshot>();
     }
 
     protected override void AfterLoad()
     {
         Board.inst.Initialize(boardSize);
+    }
+
+    protected override void AfterSave()
+    {
+        if (screenshot) screenshot.Take(SaveFileManager.inst.GetFilePath("png"));
     }
 
     protected override void BeforeSave()

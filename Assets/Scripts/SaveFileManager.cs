@@ -9,7 +9,6 @@ public class SaveFileManager : SaveFileBase
     public static SaveFileManager inst;
 
     protected override string filePath => Application.persistentDataPath + "/index.json";
-    public string dataFilePath => $"{Application.persistentDataPath}/{current}.json";
 
     [ReadOnly]
     public string current = "";
@@ -45,6 +44,11 @@ public class SaveFileManager : SaveFileBase
     {
         if (current == "") NewBoard(SaveData.inst.boardSize);
         if (!files.Contains(current)) files.Add(current);
+    }
+
+    public string GetFilePath(string ext = "json")
+    {
+        return $"{Application.persistentDataPath}/{current}.{ext}";
     }
 
     public void NewBoard(BoardSize size)
