@@ -14,10 +14,24 @@ public class AutoFitBoard : MonoBehaviour
         set
         {
             center_ = value;
+            if (value) follow = false;
             if (centeringUI) centeringUI.SetActive(interactive && !value);
         }
     }
     public GameObject centeringUI;
+    private bool follow_ = false;
+    public bool follow
+    {
+        get => follow_;
+        set
+        {
+            follow_ = value;
+            if (value) center = false;
+            if (followingUI) followingUI.SetActive(interactive && !value);
+        }
+    }
+    public GameObject followingUI;
+    public float followSize = 1.5f;
     public float halfTileSize = 0.5f;
     public bool interactive = true;
     public float menuOffset = 200;
@@ -49,7 +63,7 @@ public class AutoFitBoard : MonoBehaviour
         if (!interactive) return;
         UpdateGesture();
         UpdateScroll();
-        if (center) UpdateZoom();
+        if (center || follow) UpdateZoom();
     }
 
     void UpdateGesture()
@@ -68,7 +82,7 @@ public class AutoFitBoard : MonoBehaviour
                 Vector2 delta = finger.ScreenDelta;
                 if (delta != Vector2.zero)
                 {
-                    center = false;
+                    EnableFreeMovement();
                     targetCamera.transform.position = TargetPositionForOffset(delta.x, delta.y);
                 }
             }
@@ -77,7 +91,7 @@ public class AutoFitBoard : MonoBehaviour
         float pinchScale = LeanGesture.GetPinchRatio(fingers);
         if (pinchScale != 1.0f)
         {
-            center = false;
+            EnableFreeMovement();
             ScaleAroundPoint(pinchScale, LeanGesture.GetScreenCenter(fingers));
         }
     }
@@ -98,7 +112,7 @@ public class AutoFitBoard : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            center = false;
+            EnableFreeMovement();
             ScaleAroundPoint(1 - scroll, Input.mousePosition);
         }
     }
@@ -106,16 +120,31 @@ public class AutoFitBoard : MonoBehaviour
     void UpdateZoom()
     {
         Rect rect = GetBoardRect();
+        float targetSize;
+        Vector3 targetPosition;
+        Move move;
 
-        float scaleRatio = Mathf.Max(
-            rect.height / targetCamera.pixelHeight,
-            rect.width / (targetCamera.pixelWidth - menuOffset));
-        float targetSize = scaleRatio * targetCamera.orthographicSize;
+        if (follow && (move = FindAnyObjectByType<Move>()))
+        {
+            targetSize = followSize;
+            Vector2 center = new Vector2(targetCamera.pixelWidth / 2 + menuOffset / 2,
+                targetCamera.pixelHeight / 2);
+            Vector2 train = targetCamera.WorldToScreenPoint(move.transform.position);
+            Vector2 offset = center - train;
+            targetPosition = TargetPositionForOffset(offset.x, offset.y);
+        }
+        else
+        {
+            float scaleRatio = Mathf.Max(
+                rect.height / targetCamera.pixelHeight,
+                rect.width / (targetCamera.pixelWidth - menuOffset));
+            targetSize = scaleRatio * targetCamera.orthographicSize;
+            targetPosition = TargetPositionForOffset(
+                (targetCamera.pixelWidth - rect.xMax - (rect.xMin - menuOffset)) / 2,
+                (targetCamera.pixelHeight - rect.yMax - rect.yMin) / 2);
+        }
+
         SetCameraSize(Mathf.Lerp(targetCamera.orthographicSize, targetSize, sensitivity));
-
-        Vector3 targetPosition = TargetPositionForOffset(
-            (targetCamera.pixelWidth - rect.xMax - (rect.xMin - menuOffset)) / 2,
-            (targetCamera.pixelHeight - rect.yMax - rect.yMin) / 2);
         targetCamera.transform.position = Vector3.Lerp(
             targetCamera.transform.position, targetPosition, sensitivity);
     }
@@ -132,6 +161,17 @@ public class AutoFitBoard : MonoBehaviour
     public void EnableCentering(bool enable)
     {
         center = enable;
+    }
+
+    public void EnableFollowing(bool enable)
+    {
+        follow = enable;
+    }
+
+    public void EnableFreeMovement()
+    {
+        center = false;
+        follow = false;
     }
 
     public Rect GetBoardRect()
@@ -157,7 +197,7 @@ public class AutoFitBoard : MonoBehaviour
 
     void ScaleAroundPoint(float scale, Vector2 startPosition)
     {
-        Vector3? worldPosition = HandleTouch.GetWorldPosition(startPosition);
+        Vector3? worldPosition = CameraUtil.GetWorldPosition(startPosition, targetCamera);
         SetCameraSize(targetCamera.orthographicSize * scale);
         if (worldPosition.HasValue)
         {
