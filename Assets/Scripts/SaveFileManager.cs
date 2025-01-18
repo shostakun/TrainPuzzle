@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SaveFileManager : SaveFileBase
 {
@@ -14,6 +15,7 @@ public class SaveFileManager : SaveFileBase
     public string current = "";
     [ReadOnly]
     public List<string> files = new List<string>();
+    public UnityAction<List<string>> onFilesChanged;
 
     protected static Dictionary<BoardSize, string> boardSizeAffix = new Dictionary<BoardSize, string>
     {
@@ -43,12 +45,21 @@ public class SaveFileManager : SaveFileBase
     protected override void BeforeSave()
     {
         if (current == "") NewBoard(SaveData.inst.boardSize);
-        if (!files.Contains(current)) files.Add(current);
+        if (!files.Contains(current))
+        {
+            files.Add(current);
+            onFilesChanged?.Invoke(files);
+        }
     }
 
-    public string GetFilePath(string ext = "json")
+    public string GetCurrentFilePath(string ext = "json")
     {
-        return $"{Application.persistentDataPath}/{current}.{ext}";
+        return GetFilePath(current, ext);
+    }
+
+    public string GetFilePath(string name, string ext = "json")
+    {
+        return $"{Application.persistentDataPath}/{name}.{ext}";
     }
 
     public void NewBoard(BoardSize size)

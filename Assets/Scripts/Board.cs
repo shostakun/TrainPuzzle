@@ -51,6 +51,7 @@ public class Board : MonoBehaviour
     }
     public UnityAction<bool> onInitialized;
     private Track[] tracks;
+    public GameObject trainContainer;
 
     protected void Awake()
     {
@@ -73,6 +74,10 @@ public class Board : MonoBehaviour
 
     public void Initialize(BoardSize size)
     {
+        foreach (Transform child in trainContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
         this.size = size;
         foreach (Track track in tracks) if (track != null) track.Erase();
         tracks = new Track[width * height];
