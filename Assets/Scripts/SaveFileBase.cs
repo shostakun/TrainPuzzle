@@ -23,7 +23,7 @@ public class SaveFileBase : MonoBehaviour
 
     }
 
-    protected void Load()
+    public void Load()
     {
         try
         {

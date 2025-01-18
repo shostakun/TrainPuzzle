@@ -19,7 +19,7 @@ public class SaveData : SaveFileBase
 {
     public static SaveData inst;
 
-    protected override string filePath => SaveFileManager.inst.GetFilePath();
+    protected override string filePath => SaveFileManager.inst.GetCurrentFilePath();
 
     public BoardSize boardSize;
     [ReadOnly]
@@ -57,7 +57,7 @@ public class SaveData : SaveFileBase
 
     protected override void AfterSave()
     {
-        if (screenshot) screenshot.Take(SaveFileManager.inst.GetFilePath("png"));
+        if (screenshot) screenshot.Take(SaveFileManager.inst.GetCurrentFilePath("png"));
     }
 
     protected override void BeforeSave()

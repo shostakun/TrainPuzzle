@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: Board/UI/Canvas/In-Game Menu/Content/New Board/Label
     m_Metadata:
       m_Items: []
+  - m_Id: 2213857710825472
+    m_Key: Open
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
