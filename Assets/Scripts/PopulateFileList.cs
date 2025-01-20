@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
+// using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,14 +7,30 @@ public class PopulateFileList : MonoBehaviour
 {
     public GameObject fileListContainer;
     public GameObject fileTilePrefab;
+    public float minCellSize = 200;
 
     void Awake()
     {
         gameObject.SetActive(false);
     }
 
+    void Update()
+    {
+        RectTransform rt = fileListContainer.GetComponent<RectTransform>();
+        GridLayoutGroup glg = fileListContainer.GetComponent<GridLayoutGroup>();
+        if (rt != null && glg != null)
+        {
+            float aspectRatio = glg.cellSize.y / glg.cellSize.x;
+            int cols = Mathf.FloorToInt(rt.rect.width / minCellSize);
+            float spacing = glg.spacing.x * cols; // Extra spacing on the right for the scrollbar.
+            int width = Mathf.FloorToInt((rt.rect.width - spacing) / cols);
+            glg.cellSize = new Vector2(width, width * aspectRatio);
+        }
+    }
+
     void OnEnable()
     {
+        InputManager.inst.Lock("PopulateFileList");
         SaveFileManager.inst.onFilesChanged += Populate;
         Populate(SaveFileManager.inst.files);
     }
@@ -23,6 +39,7 @@ public class PopulateFileList : MonoBehaviour
     {
         if (SaveFileManager.inst?.onFilesChanged != null)
             SaveFileManager.inst.onFilesChanged -= Populate;
+        InputManager.inst.Unlock("PopulateFileList");
     }
 
     void Populate(List<string> files)

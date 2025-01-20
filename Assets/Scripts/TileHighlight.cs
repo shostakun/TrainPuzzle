@@ -27,11 +27,13 @@ public class TileHighlight : MonoBehaviour
 
     void OnMouseEnter()
     {
+        if (InputManager.inst.isLocked) return;
         ToolManager.inst.SetActiveTile(gameObject);
     }
 
     void OnMouseExit()
     {
+        if (InputManager.inst.isLocked) return;
         ToolManager.inst.SetActiveTile(null);
     }
 
