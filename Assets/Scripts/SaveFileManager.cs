@@ -45,9 +45,10 @@ public class SaveFileManager : SaveFileBase
     protected override void BeforeSave()
     {
         if (current == "") NewBoard(SaveData.inst.boardSize);
-        if (!files.Contains(current))
+        if (files.Count == 0 || files[0] != current)
         {
-            files.Add(current);
+            files.Remove(current);
+            files.Insert(0, current);
             onFilesChanged?.Invoke(files);
         }
     }

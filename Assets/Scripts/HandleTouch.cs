@@ -16,6 +16,7 @@ public class HandleTouch : MonoBehaviour
 
     static void HandleFingerTap(LeanFinger finger)
     {
+        if (InputManager.inst.isLocked) return;
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             Vector3? worldPosition = CameraUtil.GetWorldPosition(finger.ScreenPosition);

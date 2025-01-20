@@ -68,6 +68,7 @@ public class AutoFitBoard : MonoBehaviour
 
     void UpdateGesture()
     {
+        if (InputManager.inst.isLocked) return;
         List<LeanFinger> fingers = Use.UpdateAndGetFingers();
         if (fingers.Count == 1)
         {
@@ -109,6 +110,7 @@ public class AutoFitBoard : MonoBehaviour
 
     void UpdateScroll()
     {
+        if (InputManager.inst.isLocked) return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
