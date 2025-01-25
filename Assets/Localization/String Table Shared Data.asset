@@ -23,6 +23,21 @@ MonoBehaviour:
     m_Key: Open
     m_Metadata:
       m_Items: []
+  - m_Id: 4772789218172928
+    m_Key: File Picker/Canvas (Environment)/File Picker/DeleteConfirmation/Dialog/Buttons/Cancel/Text
+      (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4772944067682304
+    m_Key: File Picker/Canvas (Environment)/File Picker/DeleteConfirmation/Dialog/Buttons/Delete/Text
+      (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4773019644846080
+    m_Key: File Picker/Canvas (Environment)/File Picker/DeleteConfirmation/Dialog/Text
+      (TMP)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -8,6 +8,9 @@
 		}
 	],
 	"settings": {
-		"dotnet.defaultSolution": "TrainGame.sln"
+		"dotnet.defaultSolution": "TrainGame.sln",
+		"cSpell.words": [
+			"UGUI"
+		]
 	}
 }

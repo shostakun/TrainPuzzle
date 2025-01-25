@@ -26,6 +26,18 @@ MonoBehaviour:
     m_Localized: Open
     m_Metadata:
       m_Items: []
+  - m_Id: 4772789218172928
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4772944067682304
+    m_Localized: Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4773019644846080
+    m_Localized: Are you sure you want to delete this board?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

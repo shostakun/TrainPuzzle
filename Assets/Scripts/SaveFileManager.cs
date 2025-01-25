@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,8 +12,9 @@ public class SaveFileManager : SaveFileBase
 
     protected override string filePath => Application.persistentDataPath + "/index.json";
 
-    [ReadOnly]
-    public string current = "";
+    [SerializeField]
+    protected string current_ = "";
+    public string current => current_;
     [ReadOnly]
     public List<string> files = new List<string>();
     public UnityAction<List<string>> onFilesChanged;
@@ -53,6 +55,28 @@ public class SaveFileManager : SaveFileBase
         }
     }
 
+    public void DeleteFile(string name)
+    {
+        if (name == current) return;
+        files.Remove(name);
+        onFilesChanged?.Invoke(files);
+        Save();
+        DeleteFile_(GetFilePath(name, "json"));
+        DeleteFile_(GetFilePath(name, "png"));
+    }
+
+    protected void DeleteFile_(string name)
+    {
+        try
+        {
+            File.Delete(name);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+
     public string GetCurrentFilePath(string ext = "json")
     {
         return GetFilePath(current, ext);
@@ -67,6 +91,12 @@ public class SaveFileManager : SaveFileBase
     {
         isDirty = true;
         DateTime d = DateTime.UtcNow;
-        current = $"b{d.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}{boardSizeAffix[size]}";
+        current_ = $"b{d.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}{boardSizeAffix[size]}";
+    }
+
+    public void SetCurrent(string name)
+    {
+        if (files.Contains(name)) current_ = name;
+        Save();
     }
 }
