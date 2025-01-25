@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-// using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PopulateFileList : MonoBehaviour
 {
+    public GameObject deleteConfirmation;
     public GameObject fileListContainer;
     public GameObject fileTilePrefab;
     public float minCellSize = 200;
@@ -12,6 +12,7 @@ public class PopulateFileList : MonoBehaviour
     void Awake()
     {
         gameObject.SetActive(false);
+        if (deleteConfirmation != null) deleteConfirmation.SetActive(false);
     }
 
     void Update()
@@ -37,9 +38,17 @@ public class PopulateFileList : MonoBehaviour
 
     void OnDisable()
     {
-        if (SaveFileManager.inst?.onFilesChanged != null)
+        if (SaveFileManager.inst != null && SaveFileManager.inst.onFilesChanged != null)
             SaveFileManager.inst.onFilesChanged -= Populate;
-        InputManager.inst.Unlock("PopulateFileList");
+        if (InputManager.inst != null)
+            InputManager.inst.Unlock("PopulateFileList");
+    }
+
+    public void ConfirmDelete(string file)
+    {
+        PopulateFileTile pft = deleteConfirmation.GetComponentInChildren<PopulateFileTile>();
+        if (pft != null) pft.Populate(file, this);
+        deleteConfirmation.SetActive(true);
     }
 
     void Populate(List<string> files)
@@ -52,20 +61,8 @@ public class PopulateFileList : MonoBehaviour
         foreach (string file in files)
         {
             GameObject fileTile = Instantiate(fileTilePrefab, fileListContainer.transform);
-            Button btn = fileTile.GetComponentInChildren<Button>();
-            if (btn != null)
-                btn.onClick.AddListener(() =>
-                {
-                    SaveFileManager.inst.current = file;
-                    SaveData.inst.Load();
-                    gameObject.SetActive(false);
-                });
-            // TextMeshProUGUI tmp = fileTile.GetComponentInChildren<TextMeshProUGUI>();
-            // if (tmp != null) tmp.text = file;
-            Image img = fileTile.GetComponentInChildren<Image>();
-            if (img != null)
-                img.sprite = IMG2Sprite.LoadNewSprite(
-                    SaveFileManager.inst.GetFilePath(file, "png"));
+            PopulateFileTile pft = fileTile.GetComponent<PopulateFileTile>();
+            if (pft != null) pft.Populate(file, this);
         }
     }
 }
