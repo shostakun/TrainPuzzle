@@ -13,7 +13,6 @@ public class ObstacleLockRule : MonoBehaviour, ToolLockRule
 
     public static bool CheckRule(Track track)
     {
-        if (Board.inst.IsEdge(track.transform.position)) return true;
         if (track.GetComponentInChildren<TrackPath>() != null) return true;
         if (track.GetComponentInChildren<Obstacle>() != null) return true;
         string[] dirs = { "N", "S", "E", "W" };
