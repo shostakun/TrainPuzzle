@@ -35,14 +35,22 @@ public class ActivateTool : MonoBehaviour
 
     public void Activate()
     {
-        if (!hasSubMenu)
+        if (hasSubMenu)
         {
-            ToolManager.inst.SetTool(this);
-            if (closeSubMenus) MenuManager.inst.activeMenu = "";
+            ToolManager.inst.ClearTool();
+            MenuManager.inst.activeMenu = MenuManager.inst.activeMenu == menu.name ? "" : menu.name;
         }
         else
         {
-            MenuManager.inst.activeMenu = menu.name;
+            if (ToolManager.inst.currentTool == this.name)
+            {
+                ToolManager.inst.ClearTool();
+            }
+            else
+            {
+                ToolManager.inst.SetTool(this);
+            }
+            if (closeSubMenus) MenuManager.inst.activeMenu = "";
         }
     }
 
