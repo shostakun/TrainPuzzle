@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 32.85, y: -16}
+  m_AnchoredPosition: {x: 39.33, y: -16}
   m_SizeDelta: {x: 0, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6434205499223117819
@@ -206,7 +206,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 0
+          value: 78.66
         - localeIdentifier:
             m_Code: ja
           value: 64.01
@@ -217,7 +217,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 0
+          value: 39.33
         - localeIdentifier:
             m_Code: ja
           value: 32.005
@@ -823,7 +823,7 @@ MonoBehaviour:
           value: 65.7
         - localeIdentifier:
             m_Code: ja
-          value: 0
+          value: 96.01
     - rid: 3050789919735677158
       type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
@@ -834,7 +834,7 @@ MonoBehaviour:
           value: 32.85
         - localeIdentifier:
             m_Code: ja
-          value: 48.005
+          value: 0
 --- !u!1 &1780477915860030542
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +960,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 30
+          value: 69.33
         - localeIdentifier:
             m_Code: ja
           value: 62.005
@@ -971,7 +971,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 40
+          value: 118.66
         - localeIdentifier:
             m_Code: ja
           value: 104.01
@@ -1277,7 +1277,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 220
+          value: 0
         - localeIdentifier:
             m_Code: ja
           value: 0
@@ -1288,7 +1288,7 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 154
+          value: 0
         - localeIdentifier:
             m_Code: ja
           value: 0
@@ -2338,7 +2338,7 @@ MonoBehaviour:
           value: 220
         - localeIdentifier:
             m_Code: ja
-          value: 236.01001
+          value: 220
     - rid: 3050790041299451912
       type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
@@ -2346,10 +2346,10 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 383.09
+          value: 110
         - localeIdentifier:
             m_Code: ja
-          value: 118.005005
+          value: 110
     - rid: 3050790041299451913
       type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
@@ -2357,10 +2357,10 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: -60
+          value: -128
         - localeIdentifier:
             m_Code: ja
-          value: -128
+          value: -60
 --- !u!1 &5126285067738926603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3826,10 +3826,10 @@ MonoBehaviour:
         m_VariantData:
         - localeIdentifier:
             m_Code: en
-          value: 70
+          value: 102.85
         - localeIdentifier:
             m_Code: ja
-          value: 118.005005
+          value: 70
     - rid: 3050790041299451906
       type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
@@ -3840,7 +3840,7 @@ MonoBehaviour:
           value: 185.7
         - localeIdentifier:
             m_Code: ja
-          value: 216.01001
+          value: 120
 --- !u!1 &7571035681207292341
 GameObject:
   m_ObjectHideFlags: 0
