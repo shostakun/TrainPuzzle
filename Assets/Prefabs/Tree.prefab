@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8243283932112751317}
   - component: {fileID: 7023710420458954884}
   - component: {fileID: 1828614285884577039}
-  - component: {fileID: -2204165333643284615}
   - component: {fileID: -3106513560422054673}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,23 +65,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: -0.01, z: 0}
   prefabs:
-  - {fileID: 919132149155446097, guid: bbacaf4e1f28a41fcb33e3744d3f9b2b, type: 3}
-  - {fileID: 919132149155446097, guid: 54dd90d4b72c043a7a70f79c9493eb74, type: 3}
-  - {fileID: 919132149155446097, guid: a0ff8f427efca4d0a8d294e51eba1840, type: 3}
-  - {fileID: 919132149155446097, guid: 5d5f6eb1fad514f42bbb12292a1d8eff, type: 3}
-  - {fileID: 919132149155446097, guid: cf813f8cba79f45fdbec02d23fc67c1c, type: 3}
-  - {fileID: 919132149155446097, guid: 2d7bb2308afc24bef82a570137f23a5c, type: 3}
-  - {fileID: 919132149155446097, guid: 861503b72e37e4df59680da1718f76e3, type: 3}
-  - {fileID: 919132149155446097, guid: 65dfd52a801fb4d4895ed92eb67ae7e6, type: 3}
-  - {fileID: 919132149155446097, guid: 640305bee22ae4c6dad59530ded0b1e4, type: 3}
-  - {fileID: 919132149155446097, guid: fddbb3e11b8ca4aad80ee20df4d1a3ec, type: 3}
-  - {fileID: 919132149155446097, guid: 77a62cff6f39e4a218abfff8383ced3d, type: 3}
-  - {fileID: 919132149155446097, guid: 4d38ed6a2305549f28115851f93449c4, type: 3}
-  - {fileID: 919132149155446097, guid: a0a3f9b343f334710ae3b1f5207f8a23, type: 3}
-  - {fileID: 919132149155446097, guid: a8647e24903664f9b831c3a8a441d358, type: 3}
-  - {fileID: 919132149155446097, guid: c7e5a4589afcd415f890ffa36e474d4f, type: 3}
-  - {fileID: 919132149155446097, guid: 9ce3075f5f9444c59a224a1231831e8d, type: 3}
-  scale: 0.7
+  - {fileID: 919132149155446097, guid: 1a8f99f5b015b428ea76ce88046eb4ce, type: 3}
+  - {fileID: 919132149155446097, guid: f56ed48c436bd43429a6582264ac2067, type: 3}
+  - {fileID: 919132149155446097, guid: 456c6a4a389c7440bbb1c8233aee3cae, type: 3}
+  - {fileID: 919132149155446097, guid: 57689996cf3a243f8bab2a9b62e3d3f4, type: 3}
+  - {fileID: 919132149155446097, guid: 99469c58d0cc644c89697e0ce2b44b70, type: 3}
+  - {fileID: 919132149155446097, guid: 107f5e01ee74e4f04a6501bd1ecef60f, type: 3}
+  - {fileID: 919132149155446097, guid: f00999b7b3a3844dc9dc03fbb94b0c5e, type: 3}
+  - {fileID: 919132149155446097, guid: d29c9070348c440dcbe9d10c1e30fbd7, type: 3}
+  - {fileID: 919132149155446097, guid: 40849b42976b64c528cb744948d2954d, type: 3}
+  - {fileID: 919132149155446097, guid: 3cccc624829a9403695109470cffb195, type: 3}
+  - {fileID: 919132149155446097, guid: 7d3d88d993f9f48a58eed3dd9f7f1de1, type: 3}
+  - {fileID: 919132149155446097, guid: 01b0db5e4768a495688cc95addbdc5c2, type: 3}
+  - {fileID: 919132149155446097, guid: 184cbb6fac2564dec813ee78ef6d4ee3, type: 3}
+  - {fileID: 919132149155446097, guid: 8845c0c68a6574cbaaeec1c9f8945ac3, type: 3}
+  - {fileID: 919132149155446097, guid: 7b2086f116c8c46bf89a2e5a61267494, type: 3}
+  - {fileID: 919132149155446097, guid: f12689f2d951345f2a4f141f2a5fe925, type: 3}
+  scale: 0.4
 --- !u!114 &1828614285884577039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,19 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleteButtonPrefab: {fileID: 6223587998077356317, guid: a436584f449f54e65a12ea69c3cf6003, type: 3}
-  iconPrefab: {fileID: 6757544014583372668, guid: 998615ec0d5964ba88304291cfa5d9d5, type: 3}
---- !u!114 &-2204165333643284615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2144661474245027705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 352392edae61344dfb6e96a81153a2e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 6757544014583372668, guid: 277f69f4f88bc4009ab16063a6d9314a, type: 3}
 --- !u!114 &-3106513560422054673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,4 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
-  priority: 30
+  priority: 10
