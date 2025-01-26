@@ -95,6 +95,8 @@ public class ToolManager : MonoBehaviour
         }
         if (!track.isLocked)
         {
+            // It's OK to preserve hiding in currentObj, because we're about to refresh it.
+            CollisionDetector.Uninstall(currentObj, true);
             track.AddInstance(currentObj);
             SaveData.inst.Save();
         }
@@ -106,17 +108,21 @@ public class ToolManager : MonoBehaviour
 
     public void SetActiveTile(GameObject tile)
     {
+        GameObject prevTile = activeTile;
         activeTile = tile;
         onActiveTileChange?.Invoke(tile);
         if (currentObj == null) return;
         if (tile == null)
         {
+            if (prevTile != null) CollisionDetector.Uninstall(prevTile);
+            CollisionDetector.Uninstall(currentObj, false);
             currentObj.SetActive(false);
             return;
         }
         Track track = Board.inst.GetTrack(tile.transform.position);
+        CollisionDetector.Install(tile);
+        CollisionDetector.Install(currentObj);
         currentObj.SetActive(track != null && !track.isLocked);
-        if (tile == null) return;
         currentObj.transform.position = tile.transform.position;
     }
 

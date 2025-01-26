@@ -6,8 +6,9 @@ public class RandomInstance : MonoBehaviour, ToolRefresher
     public GameObject[] prefabs;
     public float scale = 0.7f;
 
-    void Start()
+    void Awake()
     {
+        // Needs to be in Awake so the instance is created immediately on instantiation.
         if (transform.childCount < 1) Refresh();
     }
 
