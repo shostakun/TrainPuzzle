@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1346914672937361339, guid: 570cc3ef655ff4bbc89fea855e0197b9, type: 3}
       propertyPath: m_Name
-      value: Icon Button
+      value: Follow Mode
       objectReference: {fileID: 0}
     - target: {fileID: 2823854913274079634, guid: 570cc3ef655ff4bbc89fea855e0197b9, type: 3}
       propertyPath: m_Pivot.x
